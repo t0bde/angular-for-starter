@@ -1,11 +1,18 @@
 import { Component, computed, OnDestroy, signal } from '@angular/core';
-import { advanceSimulation, animalCell, countPopulations, createBalancedState, emptyCell, paintCell, type Species, type SimulationState } from './ecosystem-engine';
+import { advanceSimulation, animalCell, countPopulations, createBalancedState, defaultSimulationSettings, emptyCell, paintCell, type Species, type SimulationState } from './ecosystem-engine';
 import { EcosystemLessonComponent } from './ecosystem-lesson/ecosystem-lesson.component';
 import { MeadowGridComponent } from './meadow-grid/meadow-grid.component';
 import { PopulationSummaryComponent } from './population-summary/population-summary.component';
 import { SimulationControlsComponent } from './simulation-controls/simulation-controls.component';
-import type { CellPosition, PresetName, SimulationSpeed } from './ecosystem-ui.types';
+import type { BehaviorSettings, CellPosition, PresetName, SimulationSpeed } from './ecosystem-ui.types';
 const speedIntervals: Record<SimulationSpeed, number> = { slow: 900, normal: 450, fast: 180 };
+const defaultBehaviorSettings: BehaviorSettings = {
+  plantGrowthChance: defaultSimulationSettings.plantGrowthChance,
+  herbivoreReproductionChance: defaultSimulationSettings.herbivoreReproductionChance,
+  herbivoreFoodEnergy: defaultSimulationSettings.herbivoreFoodEnergy,
+  predatorReproductionChance: defaultSimulationSettings.predatorReproductionChance,
+  predatorFoodEnergy: defaultSimulationSettings.predatorFoodEnergy,
+};
 
 @Component({
   imports: [EcosystemLessonComponent, MeadowGridComponent, PopulationSummaryComponent, SimulationControlsComponent],
@@ -19,18 +26,20 @@ export class EcosystemSimulatorComponent implements OnDestroy {
   readonly selectedTool = signal<Species>('plant');
   readonly speed = signal<SimulationSpeed>('normal');
   readonly activeCell = signal({ row: 0, column: 0 });
+  readonly behaviorSettings = signal<BehaviorSettings>({ ...defaultBehaviorSettings });
   readonly populations = computed(() => countPopulations(this.world().grid));
   private intervalId?: number;
 
   ngOnDestroy(): void { this.stop(); }
   toggleRunning(): void { if (this.running()) { this.stop(); } else { this.start(); } }
-  step(): void { this.world.update((state) => advanceSimulation(state)); }
-  reset(): void { this.stop(); this.world.set(createBalancedState(14, 18, mulberry32(24))); }
+  step(): void { this.world.update((state) => advanceSimulation(state, undefined, this.behaviorSettings())); }
+  reset(): void { this.stop(); this.world.set(createBalancedState(14, 18, mulberry32(24))); this.behaviorSettings.set({ ...defaultBehaviorSettings }); }
   applyPreset(preset: PresetName): void { this.stop(); this.world.set(createPreset(preset)); }
   selectTool(tool: Species): void { this.selectedTool.set(tool); }
   setSpeed(speed: SimulationSpeed): void { this.speed.set(speed); if (this.running()) { this.stop(); this.start(); } }
-  paint(position: CellPosition): void { this.activeCell.set(position); this.world.update((state) => paintCell(state, position, this.selectedTool())); }
+  paint(position: CellPosition): void { this.activeCell.set(position); this.world.update((state) => paintCell(state, position, this.selectedTool(), this.behaviorSettings())); }
   setActiveCell(position: CellPosition): void { this.activeCell.set(position); }
+  updateBehavior(patch: Partial<BehaviorSettings>): void { this.behaviorSettings.update((current) => ({ ...current, ...patch })); }
   ecosystemMessage(): string { const { plant, herbivore, predator } = this.populations(); if (predator === 0) return 'No predators are here. Plant eaters may grow quickly.'; if (herbivore === 0) return 'Predators need plant eaters. Watch their energy closely.'; return plant < herbivore * 2 ? 'Plants are scarce. Plant eaters may start to lose energy.' : 'The food chain is active. Watch each group affect the next one.'; }
 
   private start(): void { this.running.set(true); this.intervalId = window.setInterval(() => this.step(), speedIntervals[this.speed()]); }

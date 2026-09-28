@@ -41,4 +41,16 @@ describe('EcosystemSimulatorComponent', () => {
     expect(cells[1].getAttribute('tabindex')).toBe('0');
     expect(component.activeCell()).toEqual({ row: 0, column: 1 });
   });
+
+  it('updates behavior settings from a slider and uses them on the next step', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const sliders = compiled.querySelectorAll<HTMLInputElement>('.behavior-row input[type="range"]');
+
+    sliders[1].value = '0.5';
+    sliders[1].dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(component.behaviorSettings().herbivoreReproductionChance).toBe(0.5);
+  });
 });

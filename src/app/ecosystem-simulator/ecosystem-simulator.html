@@ -2,7 +2,7 @@
 	<header class="topbar"><div><p class="eyebrow">Living systems lab</p><h1>Meadow Makers</h1></div><div class="step-counter" aria-live="polite">Day {{ world().tick }}</div></header>
 	<app-population-summary [populations]="populations()" />
 	<section class="playground" aria-label="Ecosystem simulation">
-		<app-simulation-controls [running]="running()" [speed]="speed()" [selectedTool]="selectedTool()" (runToggled)="toggleRunning()" (stepRequested)="step()" (resetRequested)="reset()" (presetSelected)="applyPreset($event)" (speedSelected)="setSpeed($event)" (toolSelected)="selectTool($event)" />
+		<app-simulation-controls [running]="running()" [speed]="speed()" [selectedTool]="selectedTool()" [behaviorSettings]="behaviorSettings()" (runToggled)="toggleRunning()" (stepRequested)="step()" (resetRequested)="reset()" (presetSelected)="applyPreset($event)" (speedSelected)="setSpeed($event)" (toolSelected)="selectTool($event)" (behaviorSettingChanged)="updateBehavior($event)" />
 		<app-meadow-grid [grid]="world().grid" [activeCell]="activeCell()" (cellPainted)="paint($event)" (activeCellChanged)="setActiveCell($event)" />
 	</section>
 	<app-ecosystem-lesson [message]="ecosystemMessage()" />
