@@ -2,8 +2,18 @@
 	<header class="topbar"><div><p class="eyebrow">Living systems lab</p><h1>Meadow Makers</h1></div><div class="step-counter" aria-live="polite">Day {{ world().tick }}</div></header>
 	<app-population-summary [populations]="populations()" />
 	<section class="playground" aria-label="Ecosystem simulation">
-		<app-simulation-controls [running]="running()" [speed]="speed()" [selectedTool]="selectedTool()" [behaviorSettings]="behaviorSettings()" (runToggled)="toggleRunning()" (stepRequested)="step()" (resetRequested)="reset()" (presetSelected)="applyPreset($event)" (speedSelected)="setSpeed($event)" (toolSelected)="selectTool($event)" (behaviorSettingChanged)="updateBehavior($event)" />
+		<app-simulation-controls [running]="running()" [speed]="speed()" [selectedTool]="selectedTool()" (runToggled)="toggleRunning()" (stepRequested)="step()" (resetRequested)="reset()" (presetSelected)="applyPreset($event)" (speedSelected)="setSpeed($event)" (toolSelected)="selectTool($event)" />
 		<app-meadow-grid [grid]="world().grid" [activeCell]="activeCell()" (cellPainted)="paint($event)" (activeCellChanged)="setActiveCell($event)" />
+	</section>
+	<section class="behavior-panel" aria-label="Species behavior tuning">
+		<h2>Species behavior</h2>
+		<div class="behavior-list">
+			<label class="behavior-row"><span class="behavior-label">Plant growth rate<strong>{{ asPercent(behaviorSettings().plantGrowthChance) }}</strong></span><input type="range" min="0" max="0.4" step="0.02" [value]="behaviorSettings().plantGrowthChance" (input)="changeBehavior('plantGrowthChance', $any($event.target).value)"></label>
+			<label class="behavior-row"><span class="behavior-label">Plant eater reproduction<strong>{{ asPercent(behaviorSettings().herbivoreReproductionChance) }}</strong></span><input type="range" min="0" max="0.5" step="0.02" [value]="behaviorSettings().herbivoreReproductionChance" (input)="changeBehavior('herbivoreReproductionChance', $any($event.target).value)"></label>
+			<label class="behavior-row"><span class="behavior-label">Plant eater aggression<strong>+{{ behaviorSettings().herbivoreFoodEnergy }}</strong></span><input type="range" min="1" max="10" step="1" [value]="behaviorSettings().herbivoreFoodEnergy" (input)="changeBehavior('herbivoreFoodEnergy', $any($event.target).value)"></label>
+			<label class="behavior-row"><span class="behavior-label">Predator reproduction<strong>{{ asPercent(behaviorSettings().predatorReproductionChance) }}</strong></span><input type="range" min="0" max="0.5" step="0.02" [value]="behaviorSettings().predatorReproductionChance" (input)="changeBehavior('predatorReproductionChance', $any($event.target).value)"></label>
+			<label class="behavior-row"><span class="behavior-label">Predator aggression<strong>+{{ behaviorSettings().predatorFoodEnergy }}</strong></span><input type="range" min="1" max="10" step="1" [value]="behaviorSettings().predatorFoodEnergy" (input)="changeBehavior('predatorFoodEnergy', $any($event.target).value)"></label>
+		</div>
 	</section>
 	<app-ecosystem-lesson [message]="ecosystemMessage()" />
 </main>

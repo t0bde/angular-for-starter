@@ -40,6 +40,8 @@ export class EcosystemSimulatorComponent implements OnDestroy {
   paint(position: CellPosition): void { this.activeCell.set(position); this.world.update((state) => paintCell(state, position, this.selectedTool(), this.behaviorSettings())); }
   setActiveCell(position: CellPosition): void { this.activeCell.set(position); }
   updateBehavior(patch: Partial<BehaviorSettings>): void { this.behaviorSettings.update((current) => ({ ...current, ...patch })); }
+  changeBehavior(key: keyof BehaviorSettings, value: string): void { this.updateBehavior({ [key]: Number(value) }); }
+  asPercent(value: number): string { return `${Math.round(value * 100)}%`; }
   ecosystemMessage(): string { const { plant, herbivore, predator } = this.populations(); if (predator === 0) return 'No predators are here. Plant eaters may grow quickly.'; if (herbivore === 0) return 'Predators need plant eaters. Watch their energy closely.'; return plant < herbivore * 2 ? 'Plants are scarce. Plant eaters may start to lose energy.' : 'The food chain is active. Watch each group affect the next one.'; }
 
   private start(): void { this.running.set(true); this.intervalId = window.setInterval(() => this.step(), speedIntervals[this.speed()]); }
