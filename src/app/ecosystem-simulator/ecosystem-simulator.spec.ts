@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FirstComponent } from './first-component';
+import { EcosystemSimulatorComponent } from './ecosystem-simulator';
 
-describe('FirstComponent', () => {
-  let component: FirstComponent;
-  let fixture: ComponentFixture<FirstComponent>;
+describe('EcosystemSimulatorComponent', () => {
+  let component: EcosystemSimulatorComponent;
+  let fixture: ComponentFixture<EcosystemSimulatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FirstComponent],
+      imports: [EcosystemSimulatorComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FirstComponent);
+    fixture = TestBed.createComponent(EcosystemSimulatorComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

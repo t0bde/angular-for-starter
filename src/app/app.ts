@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FirstComponent } from './first-component/first-component';
+import { EcosystemSimulatorComponent } from './ecosystem-simulator/ecosystem-simulator';
 
 @Component({
-  imports: [FirstComponent],
+  imports: [EcosystemSimulatorComponent],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
