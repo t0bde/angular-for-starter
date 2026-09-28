@@ -1,0 +1,16 @@
+<main class="ecosystem-shell">
+	<header class="topbar"><div><p class="eyebrow">Living systems lab</p><h1>Meadow Makers</h1></div><div class="step-counter" aria-live="polite">Day {{ world().tick }}</div></header>
+	<section class="population-strip" aria-label="Population totals">
+		<article class="population-card plants"><span class="population-mark">PL</span><div><span>Plants</span><strong>{{ populations().plant }}</strong></div></article><article class="population-card herbivores"><span class="population-mark">HE</span><div><span>Plant eaters</span><strong>{{ populations().herbivore }}</strong></div></article><article class="population-card predators"><span class="population-mark">PR</span><div><span>Predators</span><strong>{{ populations().predator }}</strong></div></article>
+	</section>
+	<section class="playground" aria-label="Ecosystem simulation">
+		<aside class="control-panel">
+			<div class="control-group"><h2>Run the meadow</h2><div class="command-row"><button class="primary-command" type="button" (click)="toggleRunning()">{{ running() ? 'Pause' : 'Play' }}</button><button class="icon-command" type="button" (click)="step()" aria-label="Advance one day" title="Advance one day">Next</button><button class="icon-command" type="button" (click)="reset()" aria-label="Reset balanced meadow" title="Reset balanced meadow">Reset</button></div></div>
+			<div class="control-group"><h2>Speed</h2><div class="segment-control" role="group" aria-label="Simulation speed">@for (option of speeds; track option) { <button type="button" [class.selected]="speed() === option" (click)="setSpeed(option)">{{ option }}</button> }</div></div>
+			<div class="control-group"><h2>Start a story</h2><div class="preset-list"><button type="button" (click)="applyPreset('balanced')">Balanced</button><button type="button" (click)="applyPreset('meadow')">Green meadow</button><button type="button" (click)="applyPreset('predator-boom')">Predator boom</button></div></div>
+			<div class="control-group"><h2>Paint the meadow</h2><div class="tool-list">@for (tool of species; track tool.id) { <button type="button" [class.selected]="selectedTool() === tool.id" (click)="selectTool(tool.id)"><span class="tool-mark" [class]="tool.id">{{ tool.mark }}</span>{{ tool.label }}</button> }</div></div>
+		</aside>
+		<div class="meadow-frame"><div class="meadow-grid" [style.--columns]="world().grid[0].length" role="grid" aria-label="Clickable meadow habitat">@for (row of world().grid; track $index; let rowIndex = $index) { @for (cell of row; track $index; let columnIndex = $index) { <button class="habitat-cell" [class]="cell.species" type="button" role="gridcell" [attr.aria-label]="cellLabel(cell, rowIndex, columnIndex)" (click)="paint(rowIndex, columnIndex)"><span aria-hidden="true">{{ cellMark(cell) }}</span></button> } }</div></div>
+	</section>
+	<section class="lesson-panel" aria-live="polite"><div><p class="eyebrow">Meadow clue</p><h2>{{ ecosystemMessage() }}</h2></div><div class="food-chain" aria-label="Food chain: plants feed plant eaters, which feed predators"><span>PL Plants</span><b>feeds</b><span>HE Plant eaters</span><b>feeds</b><span>PR Predators</span></div></section>
+</main>
