@@ -16,6 +16,7 @@ export class FirstComponent implements OnDestroy {
   readonly running = signal(false);
   readonly selectedTool = signal<Species>('plant');
   readonly speed = signal<SimulationSpeed>('normal');
+  readonly activeCell = signal({ row: 0, column: 0 });
   readonly populations = computed(() => countPopulations(this.world().grid));
   readonly species: Array<{ id: Species; label: string; mark: string }> = [
     { id: 'plant', label: 'Plant', mark: 'PL' }, { id: 'herbivore', label: 'Plant eater', mark: 'HE' },
@@ -31,13 +32,28 @@ export class FirstComponent implements OnDestroy {
   applyPreset(preset: PresetName): void { this.stop(); this.world.set(createPreset(preset)); }
   selectTool(tool: Species): void { this.selectedTool.set(tool); }
   setSpeed(speed: SimulationSpeed): void { this.speed.set(speed); if (this.running()) { this.stop(); this.start(); } }
-  paint(row: number, column: number): void { this.world.update((state) => paintCell(state, { row, column }, this.selectedTool())); }
+  paint(row: number, column: number): void { this.activeCell.set({ row, column }); this.world.update((state) => paintCell(state, { row, column }, this.selectedTool())); }
   cellMark(cell: EcosystemCell): string { return cell.species === 'plant' ? 'PL' : cell.species === 'herbivore' ? 'HE' : cell.species === 'predator' ? 'PR' : ''; }
   cellLabel(cell: EcosystemCell, row: number, column: number): string { const name = cell.species === 'herbivore' ? 'plant eater' : cell.species; return `Row ${row + 1}, column ${column + 1}: ${name}`; }
+  cellTabIndex(row: number, column: number): number { const active = this.activeCell(); return active.row === row && active.column === column ? 0 : -1; }
+  moveCellFocus(event: KeyboardEvent, row: number, column: number): void {
+    const rows = this.world().grid.length;
+    const columns = this.world().grid[0]?.length ?? 0;
+    const next = { row, column };
+    if (event.key === 'ArrowUp') next.row = Math.max(0, row - 1);
+    else if (event.key === 'ArrowDown') next.row = Math.min(rows - 1, row + 1);
+    else if (event.key === 'ArrowLeft') next.column = Math.max(0, column - 1);
+    else if (event.key === 'ArrowRight') next.column = Math.min(columns - 1, column + 1);
+    else return;
+    event.preventDefault();
+    this.activeCell.set(next);
+    queueMicrotask(() => document.getElementById(this.cellId(next.row, next.column))?.focus());
+  }
   ecosystemMessage(): string { const { plant, herbivore, predator } = this.populations(); if (predator === 0) return 'No predators are here. Plant eaters may grow quickly.'; if (herbivore === 0) return 'Predators need plant eaters. Watch their energy closely.'; return plant < herbivore * 2 ? 'Plants are scarce. Plant eaters may start to lose energy.' : 'The food chain is active. Watch each group affect the next one.'; }
 
   private start(): void { this.running.set(true); this.intervalId = window.setInterval(() => this.step(), speedIntervals[this.speed()]); }
   private stop(): void { if (this.intervalId !== undefined) { window.clearInterval(this.intervalId); this.intervalId = undefined; } this.running.set(false); }
+  private cellId(row: number, column: number): string { return `habitat-cell-${row}-${column}`; }
 }
 
 function createPreset(preset: PresetName): SimulationState {

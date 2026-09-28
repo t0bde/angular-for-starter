@@ -42,6 +42,7 @@ interface AnimalIntent {
   origin: Position;
   destination: Position;
   energy: number;
+  consumedAnimalOrigin?: Position;
   offspring?: Position;
 }
 
@@ -139,26 +140,40 @@ export function advanceSimulation(
   );
   const grid = afterGrowth.map((row) => row.map((cell) => (isAnimal(cell) ? emptyCell() : { ...cell })));
   const claimedDestinations = new Set<string>();
+  const consumedAnimalOrigins = new Set<string>();
+  const survivingAnimalOrigins = new Set<string>();
 
   for (const intent of intents) {
+    const originKey = positionKey(intent.origin);
+    if (consumedAnimalOrigins.has(originKey)) {
+      continue;
+    }
+
     const destinationKey = positionKey(intent.destination);
 
     if (!claimedDestinations.has(destinationKey)) {
       grid[intent.destination.row][intent.destination.column] = animalCell(intent.species, intent.energy);
       claimedDestinations.add(destinationKey);
+      survivingAnimalOrigins.add(originKey);
+      if (intent.consumedAnimalOrigin) {
+        consumedAnimalOrigins.add(positionKey(intent.consumedAnimalOrigin));
+      }
       continue;
     }
-
-    const originKey = positionKey(intent.origin);
 
     if (!claimedDestinations.has(originKey) && grid[intent.origin.row][intent.origin.column].species === 'empty') {
       grid[intent.origin.row][intent.origin.column] = animalCell(intent.species, intent.energy);
       claimedDestinations.add(originKey);
+      survivingAnimalOrigins.add(originKey);
     }
   }
 
   for (const intent of intents) {
-    if (!intent.offspring || grid[intent.offspring.row][intent.offspring.column].species !== 'empty') {
+    if (
+      !survivingAnimalOrigins.has(positionKey(intent.origin)) ||
+      !intent.offspring ||
+      grid[intent.offspring.row][intent.offspring.column].species !== 'empty'
+    ) {
       continue;
     }
 
@@ -263,6 +278,7 @@ function createAnimalIntents(
         origin,
         destination,
         energy: offspring ? energy - settings.reproductionEnergyCost : energy,
+        consumedAnimalOrigin: cell.species === 'predator' ? food : undefined,
         offspring,
       });
     });

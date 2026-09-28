@@ -27,4 +27,18 @@ describe('FirstComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Meadow Makers');
     expect(component.world().tick).toBe(initialTick + 1);
   });
+
+  it('uses roving focus for habitat cells', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const cells = compiled.querySelectorAll<HTMLButtonElement>('button.habitat-cell');
+
+    cells[0].dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'ArrowRight' }));
+    fixture.detectChanges();
+
+    expect(cells).toHaveLength(252);
+    expect(cells[0].getAttribute('tabindex')).toBe('-1');
+    expect(cells[1].getAttribute('tabindex')).toBe('0');
+    expect(component.activeCell()).toEqual({ row: 0, column: 1 });
+  });
 });

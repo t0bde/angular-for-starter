@@ -49,6 +49,27 @@ describe('ecosystem engine', () => {
     expect(countPopulations(next.grid)).toEqual({ plant: 0, herbivore: 0, predator: 1 });
   });
 
+  it('removes a herbivore before it can move away from a predator', () => {
+    const state = stateFrom([[animalCell('predator', 6), animalCell('herbivore', 5), { species: 'plant' }]]);
+
+    const next = advanceSimulation(state, () => 0, noGrowthSettings);
+
+    expect(next.grid).toEqual([[emptyCell(), animalCell('predator', 11), { species: 'plant' }]]);
+  });
+
+  it('does not create offspring for a herbivore eaten in the same tick', () => {
+    const state = stateFrom([
+      [animalCell('predator', 6), animalCell('herbivore', 9), { species: 'plant' }, emptyCell()],
+    ]);
+
+    const next = advanceSimulation(state, () => 0, {
+      ...noGrowthSettings,
+      herbivoreReproductionChance: 1,
+    });
+
+    expect(countPopulations(next.grid)).toEqual({ plant: 1, herbivore: 0, predator: 1 });
+  });
+
   it('removes an animal that runs out of energy without food', () => {
     const state = stateFrom([[animalCell('herbivore', 1)]]);
 
