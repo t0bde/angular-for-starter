@@ -78,6 +78,34 @@ describe('ecosystem engine', () => {
     expect(next.grid[0][0]).toEqual(emptyCell());
   });
 
+  it('lets a predator trample a plant when boxed in with no empty tile or prey nearby', () => {
+    const state = stateFrom([
+      [{ species: 'plant' }, { species: 'plant' }, { species: 'plant' }],
+      [{ species: 'plant' }, animalCell('predator', 6), { species: 'plant' }],
+      [{ species: 'plant' }, { species: 'plant' }, { species: 'plant' }],
+    ]);
+
+    const next = advanceSimulation(state, () => 0, noGrowthSettings);
+
+    const predatorCells = next.grid.flat().filter((cell) => cell.species === 'predator');
+    expect(predatorCells).toEqual([animalCell('predator', 5, true)]);
+    expect(countPopulations(next.grid)).toEqual({ plant: 8, herbivore: 0, predator: 1 });
+  });
+
+  it('regrows the plant once a predator moves off a trampled tile', () => {
+    const state = stateFrom([[animalCell('predator', 6, true), emptyCell(), { species: 'plant' }]]);
+
+    const next = advanceSimulation(state, () => 0, noGrowthSettings);
+
+    expect(next.grid).toEqual([[{ species: 'plant' }, animalCell('predator', 5), { species: 'plant' }]]);
+  });
+
+  it('counts a hidden plant beneath an animal toward the plant population', () => {
+    const grid: EcosystemCell[][] = [[animalCell('predator', 5, true)]];
+
+    expect(countPopulations(grid)).toEqual({ plant: 1, herbivore: 0, predator: 1 });
+  });
+
   it('returns only valid neighbors at the edge of a grid', () => {
     const grid = [[emptyCell(), emptyCell()], [emptyCell(), emptyCell()]];
 
