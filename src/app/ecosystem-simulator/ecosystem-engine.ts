@@ -69,7 +69,11 @@ export function emptyCell(): EcosystemCell {
   return { species: 'empty' };
 }
 
-export function animalCell(species: 'herbivore' | 'predator', energy: number, plantBeneath?: boolean): EcosystemCell {
+export function animalCell(
+  species: 'herbivore' | 'predator',
+  energy: number,
+  plantBeneath?: boolean,
+): EcosystemCell {
   return plantBeneath ? { species, energy, plantBeneath: true } : { species, energy };
 }
 
@@ -187,7 +191,10 @@ export function advanceSimulation(
       continue;
     }
 
-    if (!claimedDestinations.has(originKey) && grid[intent.origin.row][intent.origin.column].species === 'empty') {
+    if (
+      !claimedDestinations.has(originKey) &&
+      grid[intent.origin.row][intent.origin.column].species === 'empty'
+    ) {
       grid[intent.origin.row][intent.origin.column] = animalCell(
         intent.species,
         intent.energy,
@@ -256,14 +263,16 @@ function growPlants(
         return { ...cell };
       }
 
-      const plantNeighbors = getNeighborPositions(source, { row: rowIndex, column: columnIndex }).filter(
-        ({ row: neighborRow, column: neighborColumn }) => {
-          const neighborCell = source[neighborRow][neighborColumn];
-          return neighborCell.species === 'plant' || neighborCell.plantBeneath === true;
-        },
-      ).length;
+      const plantNeighbors = getNeighborPositions(source, {
+        row: rowIndex,
+        column: columnIndex,
+      }).filter(({ row: neighborRow, column: neighborColumn }) => {
+        const neighborCell = source[neighborRow][neighborColumn];
+        return neighborCell.species === 'plant' || neighborCell.plantBeneath === true;
+      }).length;
 
-      return plantNeighbors >= settings.plantNeighborMinimum && random() < settings.plantGrowthChance
+      return plantNeighbors >= settings.plantNeighborMinimum &&
+        random() < settings.plantGrowthChance
         ? { species: 'plant' }
         : emptyCell();
     }),
@@ -287,7 +296,8 @@ function createAnimalIntents(
       const neighbors = getNeighborPositions(source, origin);
       const prey = cell.species === 'herbivore' ? 'plant' : 'herbivore';
       const foodChoices = neighbors.filter(
-        ({ row: neighborRow, column: neighborColumn }) => source[neighborRow][neighborColumn].species === prey,
+        ({ row: neighborRow, column: neighborColumn }) =>
+          source[neighborRow][neighborColumn].species === prey,
       );
       const moveChoices = neighbors.filter(
         ({ row: neighborRow, column: neighborColumn }) =>
@@ -297,8 +307,13 @@ function createAnimalIntents(
       );
       const food = choose(foodChoices, random);
       const destination = food ?? choose(moveChoices, random) ?? origin;
-      const energy = (cell.energy ?? 0) +
-        (food ? (cell.species === 'herbivore' ? settings.herbivoreFoodEnergy : settings.predatorFoodEnergy) : -1);
+      const energy =
+        (cell.energy ?? 0) +
+        (food
+          ? cell.species === 'herbivore'
+            ? settings.herbivoreFoodEnergy
+            : settings.predatorFoodEnergy
+          : -1);
 
       if (energy <= 0) {
         return;
@@ -314,12 +329,17 @@ function createAnimalIntents(
           : settings.predatorReproductionChance;
       const offspring =
         energy >= reproductionEnergy && random() < reproductionChance
-          ? choose(moveChoices.filter((position) => positionKey(position) !== positionKey(destination)), random)
+          ? choose(
+              moveChoices.filter((position) => positionKey(position) !== positionKey(destination)),
+              random,
+            )
           : undefined;
 
       // A predator inherits the prey's hidden plant so it isn't lost when the prey standing on it gets eaten.
       const preyPlantBeneath =
-        cell.species === 'predator' && food ? source[food.row][food.column].plantBeneath === true : false;
+        cell.species === 'predator' && food
+          ? source[food.row][food.column].plantBeneath === true
+          : false;
 
       intents.push({
         species: cell.species,
@@ -329,7 +349,8 @@ function createAnimalIntents(
         consumedAnimalOrigin: cell.species === 'predator' ? food : undefined,
         offspring,
         destinationPlantBeneath:
-          preyPlantBeneath || (!food && source[destination.row][destination.column].species === 'plant'),
+          preyPlantBeneath ||
+          (!food && source[destination.row][destination.column].species === 'plant'),
         originPlantBeneath: source[origin.row][origin.column].plantBeneath === true,
         offspringPlantBeneath:
           offspring !== undefined && source[offspring.row][offspring.column].species === 'plant',
@@ -348,7 +369,9 @@ function cloneGrid(grid: EcosystemCell[][]): EcosystemCell[][] {
   return grid.map((row) => row.map((cell) => ({ ...cell })));
 }
 
-function isAnimal(cell: EcosystemCell): cell is EcosystemCell & { species: 'herbivore' | 'predator' } {
+function isAnimal(
+  cell: EcosystemCell,
+): cell is EcosystemCell & { species: 'herbivore' | 'predator' } {
   return cell.species === 'herbivore' || cell.species === 'predator';
 }
 

@@ -50,7 +50,9 @@ describe('ecosystem engine', () => {
   });
 
   it('removes a herbivore before it can move away from a predator', () => {
-    const state = stateFrom([[animalCell('predator', 6), animalCell('herbivore', 5), { species: 'plant' }]]);
+    const state = stateFrom([
+      [animalCell('predator', 6), animalCell('herbivore', 5), { species: 'plant' }],
+    ]);
 
     const next = advanceSimulation(state, () => 0, noGrowthSettings);
 
@@ -105,7 +107,9 @@ describe('ecosystem engine', () => {
 
     const next = advanceSimulation(state, () => 0, noGrowthSettings);
 
-    expect(next.grid).toEqual([[{ species: 'plant' }, animalCell('predator', 5), { species: 'plant' }]]);
+    expect(next.grid).toEqual([
+      [{ species: 'plant' }, animalCell('predator', 5), { species: 'plant' }],
+    ]);
   });
 
   it('counts a hidden plant beneath an animal toward the plant population', () => {
@@ -115,7 +119,10 @@ describe('ecosystem engine', () => {
   });
 
   it('returns only valid neighbors at the edge of a grid', () => {
-    const grid = [[emptyCell(), emptyCell()], [emptyCell(), emptyCell()]];
+    const grid = [
+      [emptyCell(), emptyCell()],
+      [emptyCell(), emptyCell()],
+    ];
 
     expect(getNeighborPositions(grid, { row: 0, column: 0 })).toEqual([
       { row: 0, column: 1 },

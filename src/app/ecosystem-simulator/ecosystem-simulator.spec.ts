@@ -45,7 +45,9 @@ describe('EcosystemSimulatorComponent', () => {
   it('updates behavior settings from a slider and uses them on the next step', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const sliders = compiled.querySelectorAll<HTMLInputElement>('.behavior-row input[type="range"]');
+    const sliders = compiled.querySelectorAll<HTMLInputElement>(
+      '.behavior-row input[type="range"]',
+    );
 
     sliders[1].value = '0.5';
     sliders[1].dispatchEvent(new Event('input'));
