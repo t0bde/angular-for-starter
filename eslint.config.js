@@ -15,6 +15,15 @@ module.exports = defineConfig([
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-restricted-syntax': [
+        'warn',
+        {
+          selector:
+            ':matches(FunctionDeclaration, FunctionExpression, ArrowFunctionExpression, TSDeclareFunction, TSMethodSignature, TSCallSignatureDeclaration, TSConstructSignatureDeclaration, TSFunctionType) > :matches(Identifier, RestElement, ObjectPattern, ArrayPattern)[typeAnnotation]:has(TSAnyKeyword), :matches(FunctionDeclaration, FunctionExpression, ArrowFunctionExpression, TSDeclareFunction, TSMethodSignature, TSCallSignatureDeclaration, TSConstructSignatureDeclaration, TSFunctionType) > AssignmentPattern > :matches(Identifier, ObjectPattern, ArrayPattern)[typeAnnotation]:has(TSAnyKeyword), TSParameterProperty[parameter.typeAnnotation]:has(TSAnyKeyword)',
+          message: 'Avoid using any for parameter types.',
+        },
+      ],
       '@angular-eslint/directive-selector': [
         'error',
         {
