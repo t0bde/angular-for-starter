@@ -92,6 +92,14 @@ describe('ecosystem engine', () => {
     expect(countPopulations(next.grid)).toEqual({ plant: 8, herbivore: 0, predator: 1 });
   });
 
+  it('lets a predator cross a plant even when an empty tile is available', () => {
+    const state = stateFrom([[{ species: 'plant' }, animalCell('predator', 6), emptyCell()]]);
+
+    const next = advanceSimulation(state, () => 0, noGrowthSettings);
+
+    expect(next.grid).toEqual([[animalCell('predator', 5, true), emptyCell(), emptyCell()]]);
+  });
+
   it('regrows the plant once a predator moves off a trampled tile', () => {
     const state = stateFrom([[animalCell('predator', 6, true), emptyCell(), { species: 'plant' }]]);
 

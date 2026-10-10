@@ -290,14 +290,13 @@ function createAnimalIntents(
         ({ row: neighborRow, column: neighborColumn }) => source[neighborRow][neighborColumn].species === prey,
       );
       const moveChoices = neighbors.filter(
-        ({ row: neighborRow, column: neighborColumn }) => source[neighborRow][neighborColumn].species === 'empty',
-      );
-      // Non-plant species may cross plant tiles when boxed in, without eating them, so they can still reach hunting grounds.
-      const trampleChoices = neighbors.filter(
-        ({ row: neighborRow, column: neighborColumn }) => source[neighborRow][neighborColumn].species === 'plant',
+        ({ row: neighborRow, column: neighborColumn }) =>
+          source[neighborRow][neighborColumn].species === 'empty' ||
+          // Animals may cross plant tiles without eating them; the plant regrows once vacated.
+          source[neighborRow][neighborColumn].species === 'plant',
       );
       const food = choose(foodChoices, random);
-      const destination = food ?? choose(moveChoices, random) ?? choose(trampleChoices, random) ?? origin;
+      const destination = food ?? choose(moveChoices, random) ?? origin;
       const energy = (cell.energy ?? 0) +
         (food ? (cell.species === 'herbivore' ? settings.herbivoreFoodEnergy : settings.predatorFoodEnergy) : -1);
 
@@ -315,8 +314,7 @@ function createAnimalIntents(
           : settings.predatorReproductionChance;
       const offspring =
         energy >= reproductionEnergy && random() < reproductionChance
-          ? (choose(moveChoices.filter((position) => positionKey(position) !== positionKey(destination)), random) ??
-            choose(trampleChoices.filter((position) => positionKey(position) !== positionKey(destination)), random))
+          ? choose(moveChoices.filter((position) => positionKey(position) !== positionKey(destination)), random)
           : undefined;
 
       // A predator inherits the prey's hidden plant so it isn't lost when the prey standing on it gets eaten.
