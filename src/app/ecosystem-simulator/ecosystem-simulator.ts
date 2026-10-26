@@ -62,6 +62,9 @@ export class EcosystemSimulatorComponent implements OnDestroy {
   }
   step(): void {
     this.world.update((state) => advanceSimulation(state, undefined, this.behaviorSettings()));
+    if (!this.hasLivingAnimals()) {
+      this.stop();
+    }
   }
   reset(): void {
     this.stop();
@@ -87,6 +90,9 @@ export class EcosystemSimulatorComponent implements OnDestroy {
     this.world.update((state) =>
       paintCell(state, position, this.selectedTool(), this.behaviorSettings()),
     );
+    if (!this.hasLivingAnimals()) {
+      this.stop();
+    }
   }
   setActiveCell(position: CellPosition): void {
     this.activeCell.set(position);
@@ -109,7 +115,14 @@ export class EcosystemSimulatorComponent implements OnDestroy {
       : 'The food chain is active. Watch each group affect the next one.';
   }
 
+  private hasLivingAnimals(): boolean {
+    const { herbivore, predator } = this.populations();
+    return herbivore > 0 || predator > 0;
+  }
   private start(): void {
+    if (!this.hasLivingAnimals()) {
+      return;
+    }
     this.running.set(true);
     this.intervalId = window.setInterval(() => this.step(), speedIntervals[this.speed()]);
   }

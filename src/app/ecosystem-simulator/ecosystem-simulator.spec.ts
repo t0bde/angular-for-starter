@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { animalCell, emptyCell } from './ecosystem-engine';
 import { EcosystemSimulatorComponent } from './ecosystem-simulator';
 
 describe('EcosystemSimulatorComponent', () => {
@@ -54,5 +55,30 @@ describe('EcosystemSimulatorComponent', () => {
     fixture.detectChanges();
 
     expect(component.behaviorSettings().herbivoreReproductionChance).toBe(0.5);
+  });
+
+  it('stops the simulation when the last plant eater or predator dies', () => {
+    component.world.set({
+      grid: [[animalCell('herbivore', 1)]],
+      tick: 0,
+    });
+    component.toggleRunning();
+    expect(component.running()).toBe(true);
+
+    component.step();
+
+    expect(component.populations()).toEqual({ plant: 0, herbivore: 0, predator: 0 });
+    expect(component.running()).toBe(false);
+  });
+
+  it('does not start the simulation when no plant eaters or predators are alive', () => {
+    component.world.set({
+      grid: [[{ species: 'plant' }, emptyCell()]],
+      tick: 0,
+    });
+
+    component.toggleRunning();
+
+    expect(component.running()).toBe(false);
   });
 });
