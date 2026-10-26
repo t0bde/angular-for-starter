@@ -1,1 +1,22 @@
-<app-ecosystem-simulator />
+<nav class="lab-navbar" aria-label="Living Systems Lab pages">
+  <div class="lab-navbar-inner">
+    <span class="lab-brand">Living Systems Lab</span>
+    <div class="lab-links">
+      <a
+        routerLink="/meadow"
+        routerLinkActive="active-link"
+        class="lab-link"
+      >
+        Meadow Makers
+      </a>
+      <a
+        routerLink="/game-of-life"
+        routerLinkActive="active-link"
+        class="lab-link"
+      >
+        Conway's Way of Life
+      </a>
+    </div>
+  </div>
+</nav>
+<router-outlet />

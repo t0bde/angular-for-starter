@@ -1,0 +1,171 @@
+<main class="life-shell">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Cellular automata garden · B3/S23</p>
+      <h1>Conway's Way of Life</h1>
+    </div>
+    <div class="topbar-badges">
+      <span class="seed-badge">Seed: {{ activeSeedInfo().label }}</span>
+      <div class="step-counter" aria-live="polite">Gen {{ world().generation }}</div>
+    </div>
+  </header>
+
+  <section class="stats-strip" aria-label="Colony vital statistics">
+    <article class="stat-card living">
+      <span class="stat-mark" aria-hidden="true">LF</span>
+      <div>
+        <span class="stat-label">Living Cells</span>
+        <strong>{{ stats().alive }}</strong>
+      </div>
+    </article>
+    <article class="stat-card sprouts">
+      <span class="stat-mark" aria-hidden="true">+B</span>
+      <div>
+        <span class="stat-label">Fresh Sprouts (Age 1)</span>
+        <strong>{{ stats().sprouts }}</strong>
+      </div>
+    </article>
+    <article class="stat-card perennials">
+      <span class="stat-mark" aria-hidden="true">OK</span>
+      <div>
+        <span class="stat-label">Perennials (Age 6+)</span>
+        <strong>{{ stats().perennials }}</strong>
+      </div>
+    </article>
+    <article class="stat-card withered">
+      <span class="stat-mark" aria-hidden="true">-D</span>
+      <div>
+        <span class="stat-label">Withered Last Tick</span>
+        <strong>{{ stats().diedLastTick }}</strong>
+      </div>
+    </article>
+  </section>
+
+  <section class="playground" aria-label="Conway's Game of Life simulation">
+    <aside class="control-panel" aria-label="Garden controls">
+      <div class="control-group">
+        <div class="command-row">
+          <button type="button" class="primary-command" (click)="toggleRunning()">
+            {{ running() ? 'Pause' : 'Germinate' }}
+          </button>
+          <button type="button" class="icon-command" (click)="step()">Step</button>
+          <button type="button" class="icon-command" (click)="reset()">Replant</button>
+          <button type="button" class="icon-command" (click)="clearField()">Clear</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <p class="group-title">Growth speed</p>
+        <div class="segment-control" role="group" aria-label="Simulation speed">
+          @for (option of speeds; track option) {
+            <button
+              type="button"
+              [class.selected]="speed() === option"
+              (click)="setSpeed(option)"
+            >
+              {{ option }}
+            </button>
+          }
+        </div>
+        <label class="wrap-toggle">
+          <input
+            type="checkbox"
+            [checked]="world().wrapEdges"
+            (change)="toggleWrapEdges()"
+          />
+          <span>Wrap-around borders (Toroidal)</span>
+        </label>
+      </div>
+
+      <div class="control-group">
+        <p class="group-title">Starter seed field</p>
+        <div class="preset-list" role="group" aria-label="Methuselah starter seeds">
+          @for (preset of presets; track preset.id) {
+            <button
+              type="button"
+              [class.selected]="activePreset() === preset.id"
+              (click)="selectPreset(preset.id)"
+            >
+              <span class="preset-name">{{ preset.label }}</span>
+              <span class="preset-meta">{{ preset.cells }} cells</span>
+            </button>
+          }
+        </div>
+        <p class="seed-blurb">{{ activeSeedInfo().description }}</p>
+      </div>
+
+      <div class="control-group">
+        <p class="group-title">Planting brush</p>
+        <div class="tool-list" role="group" aria-label="Planting brush tools">
+          @for (brush of brushes; track brush.id) {
+            <button
+              type="button"
+              [class.selected]="selectedBrush() === brush.id"
+              (click)="selectBrush(brush.id)"
+            >
+              <span class="tool-mark" [class]="brush.id">{{ brush.mark }}</span>
+              <span>{{ brush.label }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    </aside>
+
+    <div class="garden-stage">
+      <div class="garden-frame">
+        <div
+          class="garden-grid"
+          role="grid"
+          aria-label="Cellular garden grid"
+          [style.--columns]="world().grid[0]?.length || 32"
+        >
+          @for (row of world().grid; track $index; let rowIndex = $index) {
+            @for (cell of row; track $index; let columnIndex = $index) {
+              <button
+                type="button"
+                role="gridcell"
+                class="garden-cell"
+                [id]="'life-cell-' + rowIndex + '-' + columnIndex"
+                [class]="cellStageClass(cell)"
+                [attr.aria-label]="cellLabel(cell, rowIndex, columnIndex)"
+                [attr.aria-pressed]="cell.alive"
+                [tabIndex]="cellTabIndex(rowIndex, columnIndex)"
+                (click)="paintCell(rowIndex, columnIndex)"
+                (keydown)="moveFocus($event, rowIndex, columnIndex)"
+              >
+                @if (cell.alive) {
+                  <span class="cell-node"></span>
+                }
+              </button>
+            }
+          }
+        </div>
+      </div>
+
+      <div class="legend-bar" aria-label="Cell growth stage legend">
+        <span class="legend-item">
+          <i class="swatch sprout"></i> Fresh Sprout (Age 1 · Born by 3 neighbors)
+        </span>
+        <span class="legend-item">
+          <i class="swatch flora"></i> Growing Flora (Age 2–5)
+        </span>
+        <span class="legend-item">
+          <i class="swatch perennial"></i> Perennial Canopy (Age 6+ · Stable)
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="lesson-panel" aria-label="Conway's laws of life">
+    <div>
+      <p class="eyebrow">Field observation</p>
+      <h2>{{ colonyMessage() }}</h2>
+    </div>
+    <div class="rules-pills">
+      <span class="rule-pill"><strong>Birth (B3)</strong> 3 neighbors sprout</span>
+      <span class="rule-pill"><strong>Survival (S23)</strong> 2–3 neighbors thrive</span>
+      <span class="rule-pill"><strong>Decay</strong> &lt;2 or &gt;3 wither</span>
+    </div>
+  </section>
+</main>
+

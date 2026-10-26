@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { EcosystemSimulatorComponent } from './ecosystem-simulator/ecosystem-simulator';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [EcosystemSimulatorComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

@@ -1,0 +1,61 @@
+.lab-navbar {
+  background: #173b31;
+  color: #fff8e7;
+  border-bottom: 2px solid #0e261f;
+  font-family: Verdana, sans-serif;
+}
+
+.lab-navbar-inner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 10px 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.lab-brand {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f4c95d;
+}
+
+.lab-links {
+  display: flex;
+  gap: 8px;
+}
+
+.lab-link {
+  padding: 6px 12px;
+  border: 2px solid rgba(255, 248, 231, 0.35);
+  color: #fff8e7;
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.lab-link:hover {
+  border-color: #f4c95d;
+}
+
+.lab-link.active-link {
+  background: #f4c95d;
+  color: #173b31;
+  border-color: #f4c95d;
+}
+
+@media (max-width: 760px) {
+  .lab-navbar-inner {
+    padding: 8px 14px;
+  }
+}
+
