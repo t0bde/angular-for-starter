@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import type { PopulationCounts } from '../ecosystem-engine';
+import type { PopulationCounts } from '../meadow-engine';
 
 @Component({
   selector: 'app-population-summary',

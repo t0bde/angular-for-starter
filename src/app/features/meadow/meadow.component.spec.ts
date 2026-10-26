@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { animalCell, emptyCell } from './ecosystem-engine';
-import { EcosystemSimulatorComponent } from './ecosystem-simulator';
+import { animalCell, emptyCell } from './meadow-engine';
+import { MeadowComponent } from './meadow.component';
 
-describe('EcosystemSimulatorComponent', () => {
-  let component: EcosystemSimulatorComponent;
-  let fixture: ComponentFixture<EcosystemSimulatorComponent>;
+describe('MeadowComponent', () => {
+  let component: MeadowComponent;
+  let fixture: ComponentFixture<MeadowComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EcosystemSimulatorComponent],
+      imports: [MeadowComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EcosystemSimulatorComponent);
+    fixture = TestBed.createComponent(MeadowComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

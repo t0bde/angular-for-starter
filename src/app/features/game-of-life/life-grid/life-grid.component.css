@@ -1,0 +1,72 @@
+:host {
+  display: block;
+  flex: 1;
+  min-width: 0;
+}
+.garden-frame {
+  padding: 14px;
+  border: 3px solid var(--ink);
+  background: #f5e2a6;
+}
+.garden-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  border: 2px solid var(--ink);
+  background: #d9ebb8;
+}
+.garden-cell {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid rgba(23, 59, 49, 0.14);
+  border-bottom: 1px solid rgba(23, 59, 49, 0.14);
+  background: #d9ebb8;
+  cursor: pointer;
+}
+.garden-cell:focus-visible {
+  outline: 3px solid var(--water);
+}
+.cell-node,
+.swatch {
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  box-sizing: border-box;
+}
+.cell-node {
+  width: 72%;
+  height: 72%;
+}
+.swatch {
+  width: 13px;
+  height: 13px;
+}
+.sprout .cell-node,
+.swatch.sprout {
+  background: #6cc437;
+}
+.flora .cell-node,
+.swatch.flora {
+  background: var(--leaf);
+}
+.perennial .cell-node,
+.swatch.perennial {
+  background: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--sun);
+}
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  font: 600 0.72rem/1.3 Verdana, sans-serif;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

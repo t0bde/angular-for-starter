@@ -1,0 +1,43 @@
+<div class="garden-stage">
+  <div class="garden-frame">
+    <div
+      class="garden-grid"
+      role="grid"
+      aria-label="Cellular garden grid"
+      [style.--columns]="grid()[0]?.length || 32"
+    >
+      @for (row of grid(); track $index; let rowIndex = $index) {
+        @for (cell of row; track $index; let columnIndex = $index) {
+          <button
+            type="button"
+            role="gridcell"
+            class="garden-cell"
+            [id]="'life-cell-' + rowIndex + '-' + columnIndex"
+            [class]="cellStageClass(cell)"
+            [attr.aria-label]="cellLabel(cell, rowIndex, columnIndex)"
+            [attr.aria-pressed]="cell.alive"
+            [tabIndex]="cellTabIndex(rowIndex, columnIndex)"
+            (click)="paint(rowIndex, columnIndex)"
+            (keydown)="moveFocus($event, rowIndex, columnIndex)"
+          >
+            @if (cell.alive) {
+              <span class="cell-node"></span>
+            }
+          </button>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="legend-bar" aria-label="Cell growth stage legend">
+    <span class="legend-item">
+      <i class="swatch sprout"></i> Fresh Sprout (Age 1 · Born by 3 neighbors)
+    </span>
+    <span class="legend-item">
+      <i class="swatch flora"></i> Growing Flora (Age 2–5)
+    </span>
+    <span class="legend-item">
+      <i class="swatch perennial"></i> Perennial Canopy (Age 6+ · Stable)
+    </span>
+  </div>
+</div>

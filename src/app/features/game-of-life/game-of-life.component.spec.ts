@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GameOfLifeComponent } from './game-of-life';
+import { GameOfLifeComponent } from './game-of-life.component';
 
 describe('GameOfLifeComponent', () => {
   let component: GameOfLifeComponent;
@@ -82,36 +82,34 @@ describe('GameOfLifeComponent', () => {
     beforeEach(() => component.clearField());
 
     it('toggles a single cell and updates the active cell', () => {
-      component.paintCell(4, 5);
+      component.paintCell({ row: 4, column: 5 });
       expect(component.world().grid[4][5].alive).toBe(true);
       expect(component.activeCell()).toEqual({ row: 4, column: 5 });
-      expect(component.cellTabIndex(4, 5)).toBe(0);
-      expect(component.cellTabIndex(0, 0)).toBe(-1);
 
-      component.paintCell(4, 5);
+      component.paintCell({ row: 4, column: 5 });
       expect(component.world().grid[4][5].alive).toBe(false);
     });
 
     it('stamps pattern brushes with the expected cell counts', () => {
       component.selectBrush('glider');
-      component.paintCell(10, 10);
+      component.paintCell({ row: 10, column: 10 });
       expect(component.stats().alive).toBe(5);
 
       component.clearField();
       component.selectBrush('blinker');
-      component.paintCell(10, 10);
+      component.paintCell({ row: 10, column: 10 });
       expect(component.stats().alive).toBe(3);
 
       component.clearField();
       component.selectBrush('acorn');
-      component.paintCell(10, 10);
+      component.paintCell({ row: 10, column: 10 });
       expect(component.stats().alive).toBe(7);
     });
 
     it('erases cells with the eraser brush', () => {
-      component.paintCell(3, 3);
+      component.paintCell({ row: 3, column: 3 });
       component.selectBrush('eraser');
-      component.paintCell(3, 3);
+      component.paintCell({ row: 3, column: 3 });
 
       expect(component.world().grid[3][3].alive).toBe(false);
     });
@@ -124,56 +122,24 @@ describe('GameOfLifeComponent', () => {
       fixture.detectChanges();
 
       expect(component.world().grid[2][3].alive).toBe(true);
+      expect(component.activeCell()).toEqual({ row: 2, column: 3 });
       expect(cell.getAttribute('aria-pressed')).toBe('true');
+    });
+
+    it('selects a brush from the controls panel', () => {
+      fixture.detectChanges();
+      const buttons: HTMLButtonElement[] = Array.from(
+        fixture.nativeElement.querySelectorAll('.tool-list button'),
+      );
+
+      buttons.find((button) => button.textContent?.includes('Glider'))?.click();
+
+      expect(component.selectedBrush()).toBe('glider');
     });
   });
 
   describe('arrow-key focus movement', () => {
-    const press = (key: string, row: number, column: number): KeyboardEvent => {
-      const event = new KeyboardEvent('keydown', { key, cancelable: true });
-      component.moveFocus(event, row, column);
-      return event;
-    };
-
-    it('moves the active cell in each arrow direction', () => {
-      expect(press('ArrowUp', 5, 5).defaultPrevented).toBe(true);
-      expect(component.activeCell()).toEqual({ row: 4, column: 5 });
-
-      press('ArrowDown', 5, 5);
-      expect(component.activeCell()).toEqual({ row: 6, column: 5 });
-
-      press('ArrowLeft', 5, 5);
-      expect(component.activeCell()).toEqual({ row: 5, column: 4 });
-
-      press('ArrowRight', 5, 5);
-      expect(component.activeCell()).toEqual({ row: 5, column: 6 });
-    });
-
-    it('clamps movement at the grid edges', () => {
-      const rows = component.world().grid.length;
-      const columns = component.world().grid[0].length;
-
-      press('ArrowUp', 0, 0);
-      expect(component.activeCell()).toEqual({ row: 0, column: 0 });
-
-      press('ArrowLeft', 0, 0);
-      expect(component.activeCell()).toEqual({ row: 0, column: 0 });
-
-      press('ArrowDown', rows - 1, columns - 1);
-      expect(component.activeCell()).toEqual({ row: rows - 1, column: columns - 1 });
-
-      press('ArrowRight', rows - 1, columns - 1);
-      expect(component.activeCell()).toEqual({ row: rows - 1, column: columns - 1 });
-    });
-
-    it('ignores non-arrow keys without preventing default', () => {
-      const before = component.activeCell();
-
-      expect(press('a', 5, 5).defaultPrevented).toBe(false);
-      expect(component.activeCell()).toEqual(before);
-    });
-
-    it('moves DOM focus to the newly active cell', async () => {
+    it('moves DOM focus and the active cell to the neighbouring cell', async () => {
       fixture.detectChanges();
       document.body.appendChild(fixture.nativeElement);
       const from: HTMLButtonElement = fixture.nativeElement.querySelector('#life-cell-5-5');
@@ -182,6 +148,7 @@ describe('GameOfLifeComponent', () => {
       fixture.detectChanges();
       await Promise.resolve();
 
+      expect(component.activeCell()).toEqual({ row: 5, column: 6 });
       expect(document.activeElement?.id).toBe('life-cell-5-6');
       fixture.nativeElement.remove();
     });

@@ -1,6 +1,7 @@
 import { Component, input, output } from '@angular/core';
-import type { EcosystemCell } from '../ecosystem-engine';
-import { speciesImages, type CellPosition } from '../ecosystem-ui.types';
+import type { EcosystemCell } from '../meadow-engine';
+import { speciesImages } from '../meadow-ui.types';
+import type { CellPosition } from '../../../shared/simulation.types';
 
 @Component({
   selector: 'app-meadow-grid',

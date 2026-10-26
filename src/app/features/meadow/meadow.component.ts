@@ -9,17 +9,13 @@ import {
   paintCell,
   type Species,
   type SimulationState,
-} from './ecosystem-engine';
-import { EcosystemLessonComponent } from './ecosystem-lesson/ecosystem-lesson.component';
+} from './meadow-engine';
 import { MeadowGridComponent } from './meadow-grid/meadow-grid.component';
+import { MeadowLessonComponent } from './meadow-lesson/meadow-lesson.component';
 import { PopulationSummaryComponent } from './population-summary/population-summary.component';
 import { SimulationControlsComponent } from './simulation-controls/simulation-controls.component';
-import type {
-  BehaviorSettings,
-  CellPosition,
-  PresetName,
-  SimulationSpeed,
-} from './ecosystem-ui.types';
+import type { BehaviorSettings, PresetName } from './meadow-ui.types';
+import type { CellPosition, SimulationSpeed } from '../../shared/simulation.types';
 const speedIntervals: Record<SimulationSpeed, number> = { slow: 900, normal: 450, fast: 180 };
 const defaultBehaviorSettings: BehaviorSettings = {
   plantGrowthChance: defaultSimulationSettings.plantGrowthChance,
@@ -31,16 +27,16 @@ const defaultBehaviorSettings: BehaviorSettings = {
 
 @Component({
   imports: [
-    EcosystemLessonComponent,
     MeadowGridComponent,
+    MeadowLessonComponent,
     PopulationSummaryComponent,
     SimulationControlsComponent,
   ],
-  selector: 'app-ecosystem-simulator',
-  styleUrl: './ecosystem-simulator.css',
-  templateUrl: './ecosystem-simulator.html',
+  selector: 'app-meadow',
+  styleUrl: './meadow.component.css',
+  templateUrl: './meadow.component.html',
 })
-export class EcosystemSimulatorComponent implements OnDestroy {
+export class MeadowComponent implements OnDestroy {
   readonly world = signal(createBalancedState(14, 18, mulberry32(24)));
   readonly running = signal(false);
   readonly selectedTool = signal<Species>('plant');

@@ -1,0 +1,64 @@
+<aside class="control-panel" aria-label="Garden controls">
+  <div class="control-group">
+    <div class="command-row">
+      <button type="button" class="primary-command" (click)="runToggled.emit()">
+        {{ running() ? 'Pause' : 'Germinate' }}
+      </button>
+      <button type="button" class="icon-command" (click)="stepRequested.emit()">Step</button>
+      <button type="button" class="icon-command" (click)="resetRequested.emit()">Replant</button>
+      <button type="button" class="icon-command" (click)="clearRequested.emit()">Clear</button>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <p class="group-title">Growth speed</p>
+    <div class="segment-control" role="group" aria-label="Simulation speed">
+      @for (option of speeds; track option) {
+        <button
+          type="button"
+          [class.selected]="speed() === option"
+          (click)="speedSelected.emit(option)"
+        >
+          {{ option }}
+        </button>
+      }
+    </div>
+    <label class="wrap-toggle">
+      <input type="checkbox" [checked]="wrapEdges()" (change)="wrapToggled.emit()" />
+      <span>Wrap-around borders (Toroidal)</span>
+    </label>
+  </div>
+
+  <div class="control-group">
+    <p class="group-title">Starter seed field</p>
+    <div class="preset-list" role="group" aria-label="Methuselah starter seeds">
+      @for (preset of presets(); track preset.id) {
+        <button
+          type="button"
+          [class.selected]="activePreset() === preset.id"
+          (click)="presetSelected.emit(preset.id)"
+        >
+          <span class="preset-name">{{ preset.label }}</span>
+          <span class="preset-meta">{{ preset.cells }} cells</span>
+        </button>
+      }
+    </div>
+    <p class="seed-blurb">{{ activeSeedInfo().description }}</p>
+  </div>
+
+  <div class="control-group">
+    <p class="group-title">Planting brush</p>
+    <div class="tool-list" role="group" aria-label="Planting brush tools">
+      @for (brush of brushes; track brush.id) {
+        <button
+          type="button"
+          [class.selected]="selectedBrush() === brush.id"
+          (click)="brushSelected.emit(brush.id)"
+        >
+          <span class="tool-mark" [class]="brush.id">{{ brush.mark }}</span>
+          <span>{{ brush.label }}</span>
+        </button>
+      }
+    </div>
+  </div>
+</aside>

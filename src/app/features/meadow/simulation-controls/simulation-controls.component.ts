@@ -1,11 +1,7 @@
 import { Component, input, output } from '@angular/core';
-import type { Species } from '../ecosystem-engine';
-import {
-  speciesImages,
-  type PresetName,
-  type SimulationSpeed,
-  type SpeciesTool,
-} from '../ecosystem-ui.types';
+import type { Species } from '../meadow-engine';
+import { speciesImages, type PresetName, type SpeciesTool } from '../meadow-ui.types';
+import { simulationSpeeds, type SimulationSpeed } from '../../../shared/simulation.types';
 
 @Component({
   selector: 'app-simulation-controls',
@@ -22,7 +18,7 @@ export class SimulationControlsComponent {
   readonly presetSelected = output<PresetName>();
   readonly speedSelected = output<SimulationSpeed>();
   readonly toolSelected = output<Species>();
-  readonly speeds: SimulationSpeed[] = ['slow', 'normal', 'fast'];
+  readonly speeds = simulationSpeeds;
   readonly tools: SpeciesTool[] = [
     { id: 'plant', label: 'Plant', mark: 'PL' },
     { id: 'herbivore', label: 'Plant eater', mark: 'HE' },

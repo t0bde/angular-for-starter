@@ -1,0 +1,30 @@
+<section class="stats-strip" aria-label="Colony vital statistics">
+  <article class="stat-card living">
+    <span class="stat-mark" aria-hidden="true">LF</span>
+    <div>
+      <span class="stat-label">Living Cells</span>
+      <strong>{{ stats().alive }}</strong>
+    </div>
+  </article>
+  <article class="stat-card sprouts">
+    <span class="stat-mark" aria-hidden="true">+B</span>
+    <div>
+      <span class="stat-label">Fresh Sprouts (Age 1)</span>
+      <strong>{{ stats().sprouts }}</strong>
+    </div>
+  </article>
+  <article class="stat-card perennials">
+    <span class="stat-mark" aria-hidden="true">OK</span>
+    <div>
+      <span class="stat-label">Perennials (Age 6+)</span>
+      <strong>{{ stats().perennials }}</strong>
+    </div>
+  </article>
+  <article class="stat-card withered">
+    <span class="stat-mark" aria-hidden="true">-D</span>
+    <div>
+      <span class="stat-label">Withered Last Tick</span>
+      <strong>{{ stats().diedLastTick }}</strong>
+    </div>
+  </article>
+</section>

@@ -11,7 +11,7 @@
   color: var(--ink);
   font-family: Georgia, 'Times New Roman', serif;
 }
-.ecosystem-shell {
+.meadow-shell {
   width: min(1180px, 100%);
   margin: 0 auto;
   padding: 24px;
@@ -95,7 +95,7 @@ h1 {
   accent-color: var(--leaf);
 }
 @media (max-width: 760px) {
-  .ecosystem-shell {
+  .meadow-shell {
     padding: 14px;
   }
   .playground {

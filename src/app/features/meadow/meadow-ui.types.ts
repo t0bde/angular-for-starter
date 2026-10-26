@@ -1,12 +1,7 @@
-import type { Species } from './ecosystem-engine';
-import type { SimulationSettings } from './ecosystem-engine';
+import type { Species } from './meadow-engine';
+import type { SimulationSettings } from './meadow-engine';
 
-export type SimulationSpeed = 'slow' | 'normal' | 'fast';
 export type PresetName = 'balanced' | 'meadow' | 'predator-boom';
-export interface CellPosition {
-  row: number;
-  column: number;
-}
 export interface SpeciesTool {
   id: Species;
   label: string;

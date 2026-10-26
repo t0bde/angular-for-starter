@@ -1,0 +1,42 @@
+<main class="life-shell">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Cellular automata garden · B3/S23</p>
+      <h1>Conway's Way of Life</h1>
+    </div>
+    <div class="topbar-badges">
+      <span class="seed-badge">Seed: {{ activeSeedInfo().label }}</span>
+      <div class="step-counter" aria-live="polite">Gen {{ world().generation }}</div>
+    </div>
+  </header>
+
+  <app-life-stats [stats]="stats()" />
+
+  <section class="playground" aria-label="Conway's Game of Life simulation">
+    <app-life-controls
+      [running]="running()"
+      [speed]="speed()"
+      [wrapEdges]="world().wrapEdges"
+      [presets]="presets"
+      [activePreset]="activePreset()"
+      [activeSeedInfo]="activeSeedInfo()"
+      [selectedBrush]="selectedBrush()"
+      (runToggled)="toggleRunning()"
+      (stepRequested)="step()"
+      (resetRequested)="reset()"
+      (clearRequested)="clearField()"
+      (speedSelected)="setSpeed($event)"
+      (wrapToggled)="toggleWrapEdges()"
+      (presetSelected)="selectPreset($event)"
+      (brushSelected)="selectBrush($event)"
+    />
+    <app-life-grid
+      [grid]="world().grid"
+      [activeCell]="activeCell()"
+      (cellPainted)="paintCell($event)"
+      (activeCellChanged)="setActiveCell($event)"
+    />
+  </section>
+
+  <app-life-lesson [message]="colonyMessage()" />
+</main>

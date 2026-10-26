@@ -1,3 +1,5 @@
+import type { CellPosition } from '../../shared/simulation.types';
+
 export type SeedPresetName = 'acorn' | 'r-pentomino' | 'diehard' | 'rabbits' | 'glider-fleet';
 export type LifeBrushTool = 'single' | 'glider' | 'blinker' | 'acorn' | 'eraser';
 
@@ -5,11 +7,6 @@ export interface LifeCell {
   alive: boolean;
   /** Consecutive generations this cell has been alive (0 when dead, 1 on birth, >1 on survival). */
   age: number;
-}
-
-export interface CellPosition {
-  row: number;
-  column: number;
 }
 
 export interface LifeSimulationState {

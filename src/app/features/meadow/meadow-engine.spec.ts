@@ -6,7 +6,7 @@ import {
   getNeighborPositions,
   type EcosystemCell,
   type SimulationState,
-} from './ecosystem-engine';
+} from './meadow-engine';
 
 const noGrowthSettings = {
   plantGrowthChance: 0,
