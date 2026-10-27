@@ -72,6 +72,32 @@ describe('ecosystem engine', () => {
     expect(countPopulations(next.grid)).toEqual({ plant: 1, herbivore: 0, predator: 1 });
   });
 
+  it('gives food only to the animal that reaches the plant first', () => {
+    const state = stateFrom([
+      [animalCell('herbivore', 5), { species: 'plant' }, animalCell('herbivore', 5)],
+    ]);
+
+    const next = advanceSimulation(state, () => 0, noGrowthSettings);
+
+    expect(next.grid).toEqual([
+      [emptyCell(), animalCell('herbivore', 9), animalCell('herbivore', 4)],
+    ]);
+  });
+
+  it('does not charge reproduction energy when no offspring is placed', () => {
+    const state = stateFrom([
+      [animalCell('herbivore', 9), { species: 'plant' }],
+      [{ species: 'plant' }, { species: 'plant' }],
+    ]);
+
+    const next = advanceSimulation(state, () => 0, {
+      ...noGrowthSettings,
+      herbivoreReproductionChance: 1,
+    });
+
+    expect(next.grid[0][1]).toEqual(animalCell('herbivore', 13));
+  });
+
   it('removes an animal that runs out of energy without food', () => {
     const state = stateFrom([[animalCell('herbivore', 1)]]);
 

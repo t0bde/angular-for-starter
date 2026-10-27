@@ -175,8 +175,6 @@ export function createSeedState(
 }
 
 export function advanceLifeGeneration(state: LifeSimulationState): LifeSimulationState {
-  const rows = state.grid.length;
-  const columns = state.grid[0]?.length ?? 0;
   let bornLastTick = 0;
   let diedLastTick = 0;
 
@@ -207,7 +205,7 @@ export function advanceLifeGeneration(state: LifeSimulationState): LifeSimulatio
 
   return {
     ...state,
-    grid: rows > 0 && columns > 0 ? grid : state.grid,
+    grid,
     generation: state.generation + 1,
     bornLastTick,
     diedLastTick,

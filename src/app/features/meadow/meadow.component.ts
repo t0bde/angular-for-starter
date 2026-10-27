@@ -37,7 +37,7 @@ const defaultBehaviorSettings: BehaviorSettings = {
   templateUrl: './meadow.component.html',
 })
 export class MeadowComponent implements OnDestroy {
-  readonly world = signal(createBalancedState(14, 18, mulberry32(24)));
+  readonly world = signal(createPreset('balanced'));
   readonly running = signal(false);
   readonly selectedTool = signal<Species>('plant');
   readonly speed = signal<SimulationSpeed>('normal');
@@ -64,7 +64,7 @@ export class MeadowComponent implements OnDestroy {
   }
   reset(): void {
     this.stop();
-    this.world.set(createBalancedState(14, 18, mulberry32(24)));
+    this.world.set(createPreset('balanced'));
     this.behaviorSettings.set({ ...defaultBehaviorSettings });
   }
   applyPreset(preset: PresetName): void {
@@ -84,7 +84,7 @@ export class MeadowComponent implements OnDestroy {
   paint(position: CellPosition): void {
     this.activeCell.set(position);
     this.world.update((state) =>
-      paintCell(state, position, this.selectedTool(), this.behaviorSettings()),
+      paintCell(state, position, this.selectedTool()),
     );
     if (!this.hasLivingAnimals()) {
       this.stop();

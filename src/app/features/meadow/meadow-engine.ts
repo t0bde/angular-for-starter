@@ -44,11 +44,13 @@ interface AnimalIntent {
   origin: Position;
   destination: Position;
   energy: number;
+  /** Energy if the animal loses its food or move race and stays put. */
+  stayEnergy: number;
+  reproductionEnergy: number;
   consumedAnimalOrigin?: Position;
   offspring?: Position;
   destinationPlantBeneath: boolean;
   originPlantBeneath: boolean;
-  offspringPlantBeneath: boolean;
 }
 
 export const defaultSimulationSettings: SimulationSettings = {
@@ -122,19 +124,17 @@ export function paintCell(
   state: SimulationState,
   position: Position,
   species: Species,
-  settings: Partial<SimulationSettings> = {},
 ): SimulationState {
   if (!isInBounds(state.grid, position)) {
     return state;
   }
 
-  const resolvedSettings = { ...defaultSimulationSettings, ...settings };
   const grid = cloneGrid(state.grid);
   grid[position.row][position.column] =
     species === 'herbivore'
-      ? animalCell('herbivore', resolvedSettings.herbivoreStartingEnergy)
+      ? animalCell('herbivore', defaultSimulationSettings.herbivoreStartingEnergy)
       : species === 'predator'
-        ? animalCell('predator', resolvedSettings.predatorStartingEnergy)
+        ? animalCell('predator', defaultSimulationSettings.predatorStartingEnergy)
         : { species };
 
   return { ...state, grid };
@@ -151,7 +151,7 @@ export function advanceSimulation(
   const intents = createAnimalIntents(source, random, resolvedSettings).sort(
     (left, right) => Number(right.species === 'predator') - Number(left.species === 'predator'),
   );
-  const plantRegrowthCandidates = new Set<string>();
+  const plantRegrowthCandidates: Position[] = [];
   const grid = afterGrowth.map((row, rowIndex) =>
     row.map((cell, columnIndex) => {
       if (!isAnimal(cell)) {
@@ -159,7 +159,7 @@ export function advanceSimulation(
       }
 
       if (cell.plantBeneath) {
-        plantRegrowthCandidates.add(positionKey({ row: rowIndex, column: columnIndex }));
+        plantRegrowthCandidates.push({ row: rowIndex, column: columnIndex });
       }
 
       return emptyCell();
@@ -167,7 +167,7 @@ export function advanceSimulation(
   );
   const claimedDestinations = new Set<string>();
   const consumedAnimalOrigins = new Set<string>();
-  const survivingAnimalOrigins = new Set<string>();
+  const survivors = new Map<string, Position>();
 
   for (const intent of intents) {
     const originKey = positionKey(intent.origin);
@@ -184,7 +184,7 @@ export function advanceSimulation(
         intent.destinationPlantBeneath,
       );
       claimedDestinations.add(destinationKey);
-      survivingAnimalOrigins.add(originKey);
+      survivors.set(originKey, intent.destination);
       if (intent.consumedAnimalOrigin) {
         consumedAnimalOrigins.add(positionKey(intent.consumedAnimalOrigin));
       }
@@ -193,38 +193,46 @@ export function advanceSimulation(
 
     if (
       !claimedDestinations.has(originKey) &&
-      grid[intent.origin.row][intent.origin.column].species === 'empty'
+      grid[intent.origin.row][intent.origin.column].species === 'empty' &&
+      intent.stayEnergy > 0
     ) {
       grid[intent.origin.row][intent.origin.column] = animalCell(
         intent.species,
-        intent.energy,
+        intent.stayEnergy,
         intent.originPlantBeneath,
       );
       claimedDestinations.add(originKey);
-      survivingAnimalOrigins.add(originKey);
+      survivors.set(originKey, intent.origin);
     }
   }
 
   for (const intent of intents) {
+    const survivor = survivors.get(positionKey(intent.origin));
+    if (!survivor || !intent.offspring) {
+      continue;
+    }
+
+    const parent = grid[survivor.row][survivor.column];
     if (
-      !survivingAnimalOrigins.has(positionKey(intent.origin)) ||
-      !intent.offspring ||
+      (parent.energy ?? 0) < intent.reproductionEnergy ||
       grid[intent.offspring.row][intent.offspring.column].species !== 'empty'
     ) {
       continue;
     }
 
+    grid[survivor.row][survivor.column] = {
+      ...parent,
+      energy: (parent.energy ?? 0) - resolvedSettings.reproductionEnergyCost,
+    };
     grid[intent.offspring.row][intent.offspring.column] = animalCell(
       intent.species,
       intent.species === 'herbivore'
         ? resolvedSettings.herbivoreStartingEnergy
         : resolvedSettings.predatorStartingEnergy,
-      intent.offspringPlantBeneath,
     );
   }
 
-  for (const key of plantRegrowthCandidates) {
-    const [row, column] = key.split(':').map(Number);
+  for (const { row, column } of plantRegrowthCandidates) {
     if (grid[row][column].species === 'empty') {
       grid[row][column] = { species: 'plant' };
     }
@@ -299,10 +307,14 @@ function createAnimalIntents(
         ({ row: neighborRow, column: neighborColumn }) =>
           source[neighborRow][neighborColumn].species === prey,
       );
+      const emptyChoices = neighbors.filter(
+        ({ row: neighborRow, column: neighborColumn }) =>
+          source[neighborRow][neighborColumn].species === 'empty',
+      );
+      // Animals may cross plant tiles without eating them; the plant regrows once vacated.
       const moveChoices = neighbors.filter(
         ({ row: neighborRow, column: neighborColumn }) =>
           source[neighborRow][neighborColumn].species === 'empty' ||
-          // Animals may cross plant tiles without eating them; the plant regrows once vacated.
           source[neighborRow][neighborColumn].species === 'plant',
       );
       const food = choose(foodChoices, random);
@@ -330,7 +342,7 @@ function createAnimalIntents(
       const offspring =
         energy >= reproductionEnergy && random() < reproductionChance
           ? choose(
-              moveChoices.filter((position) => positionKey(position) !== positionKey(destination)),
+              emptyChoices.filter((position) => positionKey(position) !== positionKey(destination)),
               random,
             )
           : undefined;
@@ -345,15 +357,15 @@ function createAnimalIntents(
         species: cell.species,
         origin,
         destination,
-        energy: offspring ? energy - settings.reproductionEnergyCost : energy,
+        energy,
+        stayEnergy: (cell.energy ?? 0) - 1,
+        reproductionEnergy,
         consumedAnimalOrigin: cell.species === 'predator' ? food : undefined,
         offspring,
         destinationPlantBeneath:
           preyPlantBeneath ||
           (!food && source[destination.row][destination.column].species === 'plant'),
         originPlantBeneath: source[origin.row][origin.column].plantBeneath === true,
-        offspringPlantBeneath:
-          offspring !== undefined && source[offspring.row][offspring.column].species === 'plant',
       });
     });
   });
