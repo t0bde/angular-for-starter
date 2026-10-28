@@ -31,6 +31,19 @@ describe('ecosystem engine', () => {
     expect(next.grid[1][1].species).toBe('plant');
   });
 
+  it('preserves a plant that grows under a moving herbivore', () => {
+    const state = stateFrom([
+      [{ species: 'plant' }, { species: 'plant' }, emptyCell()],
+      [emptyCell(), emptyCell(), emptyCell()],
+      [emptyCell(), emptyCell(), animalCell('herbivore', 5)],
+    ]);
+
+    const next = advanceSimulation(state, () => 0, { ...noGrowthSettings, plantGrowthChance: 1 });
+
+    expect(next.grid[1][1]).toEqual(animalCell('herbivore', 4, true));
+    expect(countPopulations(next.grid)).toEqual({ plant: 4, herbivore: 1, predator: 0 });
+  });
+
   it('allows a herbivore to eat a neighboring plant and gain energy', () => {
     const state = stateFrom([[animalCell('herbivore', 5), { species: 'plant' }]]);
 

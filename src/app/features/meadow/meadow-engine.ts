@@ -148,7 +148,7 @@ export function advanceSimulation(
   const resolvedSettings = { ...defaultSimulationSettings, ...settings };
   const source = state.grid;
   const afterGrowth = growPlants(source, random, resolvedSettings);
-  const intents = createAnimalIntents(source, random, resolvedSettings).sort(
+  const intents = createAnimalIntents(source, afterGrowth, random, resolvedSettings).sort(
     (left, right) => Number(right.species === 'predator') - Number(left.species === 'predator'),
   );
   const plantRegrowthCandidates: Position[] = [];
@@ -289,6 +289,7 @@ function growPlants(
 
 function createAnimalIntents(
   source: EcosystemCell[][],
+  afterGrowth: EcosystemCell[][],
   random: RandomSource,
   settings: SimulationSettings,
 ): AnimalIntent[] {
@@ -364,7 +365,7 @@ function createAnimalIntents(
         offspring,
         destinationPlantBeneath:
           preyPlantBeneath ||
-          (!food && source[destination.row][destination.column].species === 'plant'),
+          (!food && afterGrowth[destination.row][destination.column].species === 'plant'),
         originPlantBeneath: source[origin.row][origin.column].plantBeneath === true,
       });
     });
