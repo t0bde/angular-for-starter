@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
+import { I18nService } from '../../../shared/i18n/i18n.service';
 import type { EcosystemCell } from '../meadow-engine';
 import { speciesImages } from '../meadow-ui.types';
 import type { CellPosition } from '../../../shared/simulation.types';
@@ -9,6 +10,7 @@ import type { CellPosition } from '../../../shared/simulation.types';
   styleUrl: './meadow-grid.component.css',
 })
 export class MeadowGridComponent {
+  private readonly t = inject(I18nService).t;
   readonly grid = input.required<EcosystemCell[][]>();
   readonly activeCell = input.required<CellPosition>();
   readonly cellPainted = output<CellPosition>();
@@ -17,8 +19,11 @@ export class MeadowGridComponent {
     return speciesImages[cell.species] ?? null;
   }
   cellLabel(cell: EcosystemCell, row: number, column: number): string {
-    const name = cell.species === 'herbivore' ? 'plant eater' : cell.species;
-    return `Row ${row + 1}, column ${column + 1}: ${name}`;
+    return this.t('meadow.cellLabel', {
+      row: row + 1,
+      column: column + 1,
+      name: this.t(`species.${cell.species}Cell`),
+    });
   }
   cellTabIndex(row: number, column: number): number {
     const active = this.activeCell();

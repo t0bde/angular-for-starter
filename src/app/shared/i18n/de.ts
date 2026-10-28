@@ -1,0 +1,145 @@
+import type { TranslationKey } from './en';
+
+export const de: Record<TranslationKey, string> = {
+  'app.title': 'Labor für lebende Systeme',
+  'app.navLabel': 'Seiten des Labors für lebende Systeme',
+  'app.language': 'Sprache',
+  'app.footerLegal': 'Impressum & Datenschutz',
+  'nav.meadow': 'Wiesenmacher',
+  'nav.life': 'Conways Spiel des Lebens',
+  'title.meadow': 'Wiesenmacher · Labor für lebende Systeme',
+  'title.life': 'Conways Spiel des Lebens · Labor für lebende Systeme',
+  'title.impressum': 'Impressum & Datenschutz · Labor für lebende Systeme',
+
+  'common.speed': 'Simulationsgeschwindigkeit',
+  'speed.slow': 'langsam',
+  'speed.normal': 'normal',
+  'speed.fast': 'schnell',
+  'common.pause': 'Pause',
+
+  'meadow.eyebrow': 'Labor für lebende Systeme',
+  'meadow.heading': 'Wiesenmacher',
+  'meadow.day': 'Tag {day}',
+  'meadow.simulation': 'Ökosystem-Simulation',
+  'meadow.behaviorLabel': 'Verhalten der Arten einstellen',
+  'meadow.behaviorHeading': 'Verhalten der Arten',
+  'meadow.plantGrowth': 'Wachstumsrate der Pflanzen',
+  'meadow.herbivoreReproduction': 'Vermehrung der Pflanzenfresser',
+  'meadow.herbivoreAggression': 'Aggression der Pflanzenfresser',
+  'meadow.predatorReproduction': 'Vermehrung der Raubtiere',
+  'meadow.predatorAggression': 'Aggression der Raubtiere',
+  'meadow.msgNoPredators': 'Hier gibt es keine Raubtiere. Pflanzenfresser können schnell wachsen.',
+  'meadow.msgNoHerbivores':
+    'Raubtiere brauchen Pflanzenfresser. Behalte ihre Energie genau im Blick.',
+  'meadow.msgScarce': 'Pflanzen sind knapp. Pflanzenfresser verlieren eventuell Energie.',
+  'meadow.msgActive':
+    'Die Nahrungskette ist aktiv. Beobachte, wie jede Gruppe die nächste beeinflusst.',
+
+  'species.plant': 'Pflanze',
+  'species.herbivore': 'Pflanzenfresser',
+  'species.predator': 'Raubtier',
+  'species.empty': 'Radierer',
+  'species.emptyCell': 'leer',
+  'species.herbivoreCell': 'Pflanzenfresser',
+  'species.plantCell': 'Pflanze',
+  'species.predatorCell': 'Raubtier',
+  'meadow.cellLabel': 'Zeile {row}, Spalte {column}: {name}',
+
+  'controls.runHeading': 'Wiese starten',
+  'controls.play': 'Start',
+  'controls.next': 'Weiter',
+  'controls.advance': 'Einen Tag weiter',
+  'controls.reset': 'Zurücksetzen',
+  'controls.resetMeadow': 'Ausgewogene Wiese zurücksetzen',
+  'controls.speedHeading': 'Geschwindigkeit',
+  'controls.storyHeading': 'Geschichte starten',
+  'controls.balanced': 'Ausgewogen',
+  'controls.greenMeadow': 'Grüne Wiese',
+  'controls.predatorBoom': 'Raubtier-Boom',
+  'controls.paintHeading': 'Wiese bemalen',
+
+  'population.label': 'Bestandsübersicht',
+  'population.plants': 'Pflanzen',
+  'population.herbivores': 'Pflanzenfresser',
+  'population.predators': 'Raubtiere',
+
+  'lesson.meadowClue': 'Wiesen-Hinweis',
+  'lesson.foodChain':
+    'Nahrungskette: Pflanzen ernähren Pflanzenfresser, die wiederum Raubtiere ernähren',
+  'lesson.feeds': 'ernährt',
+
+  'life.eyebrow': 'Garten der zellulären Automaten · B3/S23',
+  'life.heading': 'Conways Spiel des Lebens',
+  'life.seed': 'Startmuster: {name}',
+  'life.gen': 'Gen. {generation}',
+  'life.simulation': 'Simulation von Conways Spiel des Lebens',
+  'life.msgQuiet':
+    'Der Boden ist still. Wähle ein Methusalem-Startmuster oder klicke auf Felder, um eine neue Kolonie zu pflanzen.',
+  'life.msgPlanted':
+    'Startmuster gepflanzt: {name} ({alive} Zellen). Drücke Start oder Schritt, um es keimen zu sehen!',
+  'life.msgEquilibrium':
+    'Gleichgewicht erreicht! Nur noch stabile Muster bleiben im Garten übrig.',
+  'life.msgRapid':
+    'Schnelles Keimen: Neue Triebe sprießen auf dem freien Boden.',
+  'life.msgMature':
+    'Ausgewachsene Dauerkolonien halten die Kolonie zusammen, während Oszillatoren und Gleiter nach außen wandern.',
+
+  'lifeControls.label': 'Gartensteuerung',
+  'lifeControls.germinate': 'Keimen lassen',
+  'lifeControls.step': 'Schritt',
+  'lifeControls.replant': 'Neu pflanzen',
+  'lifeControls.clear': 'Leeren',
+  'lifeControls.growthSpeed': 'Wachstumsgeschwindigkeit',
+  'lifeControls.wrap': 'Umlaufende Ränder (Torus)',
+  'lifeControls.seedField': 'Startmuster-Feld',
+  'lifeControls.seedGroup': 'Methusalem-Startmuster',
+  'lifeControls.cells': '{count} Zellen',
+  'lifeControls.brush': 'Pflanzpinsel',
+  'lifeControls.brushGroup': 'Werkzeuge des Pflanzpinsels',
+  'brush.single': 'Einzelne Zelle (Umschalten)',
+  'brush.acorn': 'Eichel-Muster (7)',
+  'brush.glider': 'Gleiter-Trieb (5)',
+  'brush.blinker': 'Blinker-Reihe (3)',
+  'brush.eraser': 'Entfernen / Löschen',
+  'seed.acorn.label': 'Eichel-Muster',
+  'seed.acorn.description':
+    'Ein winziges Muster aus 7 Zellen, das tausende Generationen lang zu Gleitern und Eichen heranwächst.',
+  'seed.r-pentomino.label': 'R-Pentomino',
+  'seed.r-pentomino.description':
+    'Conways klassischer Trieb aus 5 Zellen, der in lebhafte, langlebige Aktivität ausbricht.',
+  'seed.diehard.label': 'Diehard-Muster',
+  'seed.diehard.description':
+    'Eine kurzlebige Blüte aus 7 Zellen, die 130 Generationen gedeiht, bevor sie verschwindet.',
+  'seed.rabbits.label': 'Kaninchen-Muster',
+  'seed.rabbits.description':
+    'Ein Startcluster aus 9 Zellen, das sich schnell zu einer dichten Zellwiese vermehrt.',
+  'seed.glider-fleet.label': 'Gleiter-Armada',
+  'seed.glider-fleet.description':
+    'Drei synchronisierte Gleiter, die diagonal durch den Garten driften.',
+
+  'lifeGrid.label': 'Gitter des Zellgartens',
+  'lifeGrid.emptySoil': 'Zeile {row}, Spalte {column}: leerer Boden',
+  'lifeGrid.cell': 'Zeile {row}, Spalte {column}: {stage} (Alter {age})',
+  'stage.sprout': 'frischer Trieb',
+  'stage.flora': 'wachsende Pflanze',
+  'stage.perennial': 'Dauerbewuchs',
+  'lifeGrid.legend': 'Legende der Wachstumsstufen',
+  'lifeGrid.legendSprout': 'Frischer Trieb (Alter 1 · Geboren durch 3 Nachbarn)',
+  'lifeGrid.legendFlora': 'Wachsende Pflanze (Alter 2–5)',
+  'lifeGrid.legendPerennial': 'Dauerbewuchs (Alter 6+ · Stabil)',
+
+  'lifeLesson.label': 'Conways Regeln des Lebens',
+  'lifeLesson.eyebrow': 'Feldbeobachtung',
+  'lifeLesson.birth': 'Geburt (B3)',
+  'lifeLesson.birthText': '3 Nachbarn lassen einen Trieb sprießen',
+  'lifeLesson.survival': 'Überleben (S23)',
+  'lifeLesson.survivalText': '2–3 Nachbarn: die Zelle gedeiht',
+  'lifeLesson.decay': 'Verfall',
+  'lifeLesson.decayText': '<2 oder >3 Nachbarn: die Zelle welkt',
+
+  'lifeStats.label': 'Kennzahlen der Kolonie',
+  'lifeStats.living': 'Lebende Zellen',
+  'lifeStats.sprouts': 'Frische Triebe (Alter 1)',
+  'lifeStats.perennials': 'Dauerpflanzen (Alter 6+)',
+  'lifeStats.withered': 'Verwelkt im letzten Schritt',
+};

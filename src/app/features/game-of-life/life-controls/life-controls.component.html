@@ -1,54 +1,54 @@
-<aside class="control-panel" aria-label="Garden controls">
+<aside class="control-panel" [attr.aria-label]="t('lifeControls.label')">
   <div class="control-group">
     <div class="command-row">
       <button type="button" class="primary-command" (click)="runToggled.emit()">
-        {{ running() ? 'Pause' : 'Germinate' }}
+        {{ running() ? t('common.pause') : t('lifeControls.germinate') }}
       </button>
-      <button type="button" class="icon-command" (click)="stepRequested.emit()">Step</button>
-      <button type="button" class="icon-command" (click)="resetRequested.emit()">Replant</button>
-      <button type="button" class="icon-command" (click)="clearRequested.emit()">Clear</button>
+      <button type="button" class="icon-command" (click)="stepRequested.emit()">{{ t('lifeControls.step') }}</button>
+      <button type="button" class="icon-command" (click)="resetRequested.emit()">{{ t('lifeControls.replant') }}</button>
+      <button type="button" class="icon-command" (click)="clearRequested.emit()">{{ t('lifeControls.clear') }}</button>
     </div>
   </div>
 
   <div class="control-group">
-    <p class="group-title">Growth speed</p>
-    <div class="segment-control" role="group" aria-label="Simulation speed">
+    <p class="group-title">{{ t('lifeControls.growthSpeed') }}</p>
+    <div class="segment-control" role="group" [attr.aria-label]="t('common.speed')">
       @for (option of speeds; track option) {
         <button
           type="button"
           [class.selected]="speed() === option"
           (click)="speedSelected.emit(option)"
         >
-          {{ option }}
+          {{ t('speed.' + option) }}
         </button>
       }
     </div>
     <label class="wrap-toggle">
       <input type="checkbox" [checked]="wrapEdges()" (change)="wrapToggled.emit()" />
-      <span>Wrap-around borders (Toroidal)</span>
+      <span>{{ t('lifeControls.wrap') }}</span>
     </label>
   </div>
 
   <div class="control-group">
-    <p class="group-title">Starter seed field</p>
-    <div class="preset-list" role="group" aria-label="Methuselah starter seeds">
+    <p class="group-title">{{ t('lifeControls.seedField') }}</p>
+    <div class="preset-list" role="group" [attr.aria-label]="t('lifeControls.seedGroup')">
       @for (preset of presets(); track preset.id) {
         <button
           type="button"
           [class.selected]="activePreset() === preset.id"
           (click)="presetSelected.emit(preset.id)"
         >
-          <span class="preset-name">{{ preset.label }}</span>
-          <span class="preset-meta">{{ preset.cells }} cells</span>
+          <span class="preset-name">{{ t('seed.' + preset.id + '.label') }}</span>
+          <span class="preset-meta">{{ t('lifeControls.cells', { count: preset.cells }) }}</span>
         </button>
       }
     </div>
-    <p class="seed-blurb">{{ activeSeedInfo().description }}</p>
+    <p class="seed-blurb">{{ t('seed.' + activeSeedInfo().id + '.description') }}</p>
   </div>
 
   <div class="control-group">
-    <p class="group-title">Planting brush</p>
-    <div class="tool-list" role="group" aria-label="Planting brush tools">
+    <p class="group-title">{{ t('lifeControls.brush') }}</p>
+    <div class="tool-list" role="group" [attr.aria-label]="t('lifeControls.brushGroup')">
       @for (brush of brushes; track brush.id) {
         <button
           type="button"
@@ -56,7 +56,7 @@
           (click)="brushSelected.emit(brush.id)"
         >
           <span class="tool-mark" [class]="brush.id">{{ brush.mark }}</span>
-          <span>{{ brush.label }}</span>
+          <span>{{ t('brush.' + brush.id) }}</span>
         </button>
       }
     </div>

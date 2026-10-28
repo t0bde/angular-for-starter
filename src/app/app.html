@@ -1,25 +1,37 @@
-<nav class="lab-navbar" aria-label="Living Systems Lab pages">
+<nav class="lab-navbar" [attr.aria-label]="t('app.navLabel')">
   <div class="lab-navbar-inner">
-    <span class="lab-brand">Living Systems Lab</span>
+    <span class="lab-brand">{{ t('app.title') }}</span>
     <div class="lab-links">
       <a
         routerLink="/meadow"
         routerLinkActive="active-link"
         class="lab-link"
       >
-        Meadow Makers
+        {{ t('nav.meadow') }}
       </a>
       <a
         routerLink="/game-of-life"
         routerLinkActive="active-link"
         class="lab-link"
       >
-        Conway's Way of Life
+        {{ t('nav.life') }}
       </a>
+    </div>
+    <div class="lang-switch" role="group" [attr.aria-label]="t('app.language')">
+      @for (option of languages; track option) {
+        <button
+          type="button"
+          [lang]="option"
+          [attr.aria-pressed]="i18n.lang() === option"
+          (click)="i18n.setLang(option)"
+        >
+          {{ option.toUpperCase() }}
+        </button>
+      }
     </div>
   </div>
 </nav>
 <router-outlet />
 <footer class="lab-footer">
-  <a routerLink="/impressum" class="footer-link">Impressum &amp; Datenschutz</a>
+  <a routerLink="/impressum" class="footer-link">{{ t('app.footerLegal') }}</a>
 </footer>

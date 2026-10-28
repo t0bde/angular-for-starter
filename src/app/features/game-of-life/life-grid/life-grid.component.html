@@ -3,7 +3,7 @@
     <div
       class="garden-grid"
       role="grid"
-      aria-label="Cellular garden grid"
+      [attr.aria-label]="t('lifeGrid.label')"
       [style.--columns]="grid()[0]?.length || 32"
     >
       @for (row of grid(); track $index; let rowIndex = $index) {
@@ -29,15 +29,15 @@
     </div>
   </div>
 
-  <div class="legend-bar" aria-label="Cell growth stage legend">
+  <div class="legend-bar" [attr.aria-label]="t('lifeGrid.legend')">
     <span class="legend-item">
-      <i class="swatch sprout"></i> Fresh Sprout (Age 1 · Born by 3 neighbors)
+      <i class="swatch sprout"></i> {{ t('lifeGrid.legendSprout') }}
     </span>
     <span class="legend-item">
-      <i class="swatch flora"></i> Growing Flora (Age 2–5)
+      <i class="swatch flora"></i> {{ t('lifeGrid.legendFlora') }}
     </span>
     <span class="legend-item">
-      <i class="swatch perennial"></i> Perennial Canopy (Age 6+ · Stable)
+      <i class="swatch perennial"></i> {{ t('lifeGrid.legendPerennial') }}
     </span>
   </div>
 </div>

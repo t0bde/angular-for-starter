@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
+import { I18nService } from '../../../shared/i18n/i18n.service';
 import type { LifeCell } from '../game-of-life-engine';
 import type { CellPosition } from '../../../shared/simulation.types';
 
@@ -8,6 +9,7 @@ import type { CellPosition } from '../../../shared/simulation.types';
   styleUrl: './life-grid.component.css',
 })
 export class LifeGridComponent {
+  protected readonly t = inject(I18nService).t;
   readonly grid = input.required<LifeCell[][]>();
   readonly activeCell = input.required<CellPosition>();
   readonly cellPainted = output<CellPosition>();
@@ -28,11 +30,16 @@ export class LifeGridComponent {
 
   cellLabel(cell: LifeCell, row: number, column: number): string {
     if (!cell.alive) {
-      return `Row ${row + 1}, column ${column + 1}: empty soil`;
+      return this.t('lifeGrid.emptySoil', { row: row + 1, column: column + 1 });
     }
     const stage =
-      cell.age === 1 ? 'fresh sprout' : cell.age <= 5 ? 'growing flora' : 'perennial canopy';
-    return `Row ${row + 1}, column ${column + 1}: ${stage} (age ${cell.age})`;
+      cell.age === 1 ? 'sprout' : cell.age <= 5 ? 'flora' : 'perennial';
+    return this.t('lifeGrid.cell', {
+      row: row + 1,
+      column: column + 1,
+      stage: this.t(`stage.${stage}`),
+      age: cell.age,
+    });
   }
 
   cellTabIndex(row: number, column: number): number {

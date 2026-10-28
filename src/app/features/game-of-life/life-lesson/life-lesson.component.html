@@ -1,11 +1,11 @@
-<section class="lesson-panel" aria-label="Conway's laws of life">
+<section class="lesson-panel" [attr.aria-label]="t('lifeLesson.label')">
   <div>
-    <p class="eyebrow">Field observation</p>
+    <p class="eyebrow">{{ t('lifeLesson.eyebrow') }}</p>
     <h2>{{ message() }}</h2>
   </div>
   <div class="rules-pills">
-    <span class="rule-pill"><strong>Birth (B3)</strong> 3 neighbors sprout</span>
-    <span class="rule-pill"><strong>Survival (S23)</strong> 2–3 neighbors thrive</span>
-    <span class="rule-pill"><strong>Decay</strong> &lt;2 or &gt;3 wither</span>
+    <span class="rule-pill"><strong>{{ t('lifeLesson.birth') }}</strong> {{ t('lifeLesson.birthText') }}</span>
+    <span class="rule-pill"><strong>{{ t('lifeLesson.survival') }}</strong> {{ t('lifeLesson.survivalText') }}</span>
+    <span class="rule-pill"><strong>{{ t('lifeLesson.decay') }}</strong> {{ t('lifeLesson.decayText') }}</span>
   </div>
 </section>

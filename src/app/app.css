@@ -53,6 +53,32 @@
   border-color: #f4c95d;
 }
 
+.lang-switch {
+  display: flex;
+  gap: 4px;
+}
+
+.lang-switch button {
+  padding: 6px 10px;
+  border: 2px solid rgba(255, 248, 231, 0.35);
+  background: transparent;
+  color: #fff8e7;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lang-switch button:hover {
+  border-color: #f4c95d;
+}
+
+.lang-switch button[aria-pressed='true'] {
+  background: #f4c95d;
+  color: #173b31;
+  border-color: #f4c95d;
+}
+
 .lab-footer {
   display: flex;
   gap: 16px;

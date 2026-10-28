@@ -1,20 +1,20 @@
-<section class="population-strip" aria-label="Population totals">
+<section class="population-strip" [attr.aria-label]="t('population.label')">
   <article class="population-card plants">
     <span class="population-mark"><img src="species/plant.svg" alt="" /></span>
     <div>
-      <span>Plants</span><strong>{{ populations().plant }}</strong>
+      <span>{{ t('population.plants') }}</span><strong>{{ populations().plant }}</strong>
     </div>
   </article>
   <article class="population-card herbivores">
     <span class="population-mark"><img src="species/herbivore.svg" alt="" /></span>
     <div>
-      <span>Plant eaters</span><strong>{{ populations().herbivore }}</strong>
+      <span>{{ t('population.herbivores') }}</span><strong>{{ populations().herbivore }}</strong>
     </div>
   </article>
   <article class="population-card predators">
     <span class="population-mark"><img src="species/predator.svg" alt="" /></span>
     <div>
-      <span>Predators</span><strong>{{ populations().predator }}</strong>
+      <span>{{ t('population.predators') }}</span><strong>{{ populations().predator }}</strong>
     </div>
   </article>
 </section>
