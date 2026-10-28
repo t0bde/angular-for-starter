@@ -25,6 +25,6 @@ describe('App', () => {
     const links = Array.from(compiled.querySelectorAll('.lab-link')).map((el) =>
       el.textContent?.trim(),
     );
-    expect(links).toEqual(['Meadow Makers', "Conway's Way of Life"]);
+    expect(links).toEqual(['Meadow Makers', "Conway's Way of Life", 'How it works']);
   });
 });

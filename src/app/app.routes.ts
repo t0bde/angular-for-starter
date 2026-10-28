@@ -14,6 +14,12 @@ export const routes: Routes = [
     title: 'title.life',
   },
   {
+    path: 'how-it-works',
+    loadComponent: () =>
+      import('./features/how-it-works/how-it-works.component').then((m) => m.HowItWorksComponent),
+    title: 'title.howItWorks',
+  },
+  {
     path: 'impressum',
     loadComponent: () =>
       import('./features/impressum/impressum.component').then((m) => m.ImpressumComponent),

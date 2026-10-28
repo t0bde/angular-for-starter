@@ -9,6 +9,8 @@ export const de: Record<TranslationKey, string> = {
   'nav.life': 'Conways Spiel des Lebens',
   'title.meadow': 'Wiesenmacher · Labor für lebende Systeme',
   'title.life': 'Conways Spiel des Lebens · Labor für lebende Systeme',
+  'nav.howItWorks': 'So funktioniert es',
+  'title.howItWorks': 'So funktioniert Conways Spiel des Lebens · Labor für lebende Systeme',
   'title.impressum': 'Impressum & Datenschutz · Labor für lebende Systeme',
 
   'common.speed': 'Simulationsgeschwindigkeit',
@@ -142,4 +144,38 @@ export const de: Record<TranslationKey, string> = {
   'lifeStats.sprouts': 'Frische Triebe (Alter 1)',
   'lifeStats.perennials': 'Dauerpflanzen (Alter 6+)',
   'lifeStats.withered': 'Verwelkt im letzten Schritt',
+
+  'howItWorks.eyebrow': 'Hintergrund',
+  'howItWorks.heading': 'So funktioniert Conways Spiel des Lebens',
+  'howItWorks.summaryHeading': 'Die Idee',
+  'howItWorks.summary1':
+    'Conways Spiel des Lebens ist ein zellulärer Automat, den der Mathematiker John Horton Conway 1970 entwickelt hat. Ein Raster aus Zellen, die entweder lebendig oder tot sind, entwickelt sich in diskreten Schritten weiter, den Generationen.',
+  'howItWorks.summary2':
+    'Es gibt keine Spieler und kein Ziel. Jede Zelle folgt denselben einfachen lokalen Regeln, und trotzdem können Muster entstehen, die sich bewegen, schwingen, wachsen oder verschwinden.',
+  'howItWorks.showHeading': 'Was diese Seite zeigt',
+  'howItWorks.showIntro':
+    'Die Simulation auf der Seite Conways Spiel des Lebens wendet diese Regeln auf ein lebendiges Raster an:',
+  'howItWorks.showGrid':
+    'Zellen-Garten: Jedes Feld ist eine Zelle. Ihre Farbe zeigt die Wachstumsstufe: frischer Trieb, wachsende Pflanze oder Dauerbewuchs.',
+  'howItWorks.showStats':
+    'Kennzahlen: lebende Zellen, frische Triebe (Alter 1), Dauerpflanzen (Alter 6+) und Zellen, die im letzten Schritt verwelkt sind.',
+  'howItWorks.showControls':
+    'Steuerung: Keimen (Ablauf starten), einen Schritt weiter, zurücksetzen, leeren und Wachstumsgeschwindigkeit einstellen.',
+  'howItWorks.showSeeds':
+    'Startsamen: klassische Methusalem-Muster wie Acorn, R-Pentomino, Diehard, Rabbits und die Gleiter-Armada.',
+  'howItWorks.showBrush':
+    'Pflanzpinsel: einzelne Zellen, Gleiter, Blinker oder Acorn setzen oder Zellen entfernen.',
+  'howItWorks.algoHeading': 'Der Algorithmus',
+  'howItWorks.algoIntro':
+    'Jede Generation wird in einem Durchgang aus dem aktuellen Zustand berechnet, sodass sich alle Zellen gleichzeitig ändern:',
+  'howItWorks.algoNeighbors':
+    'Nachbarn zählen: Für jede Zelle wird gezählt, wie viele ihrer 8 Nachbarn (waagerecht, senkrecht und diagonal) lebendig sind.',
+  'howItWorks.algoWrap':
+    'Ränder: Mit aktivierten Umlaufrändern (Standard) wirkt das Raster wie ein Torus, der linke Rand grenzt also an den rechten und der obere an den unteren. Sonst zählen Zellen außerhalb des Rasters als tot.',
+  'howItWorks.algoBirth': 'Geburt: Eine tote Zelle mit genau 3 lebenden Nachbarn wird lebendig.',
+  'howItWorks.algoSurvival': 'Überleben: Eine lebende Zelle mit 2 oder 3 lebenden Nachbarn bleibt lebendig.',
+  'howItWorks.algoDeath':
+    'Tod: Eine lebende Zelle mit weniger als 2 (Unterbevölkerung) oder mehr als 3 (Überbevölkerung) lebenden Nachbarn stirbt.',
+  'howItWorks.algoNotation': 'Kurz geschrieben lautet die Regel B3/S23: Geburt bei 3, Überleben bei 2 oder 3.',
+  'howItWorks.tryIt': 'Im Simulator ausprobieren',
 };

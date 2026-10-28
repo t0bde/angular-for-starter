@@ -5,8 +5,10 @@ export const en = {
   'app.footerLegal': 'Impressum & Datenschutz',
   'nav.meadow': 'Meadow Makers',
   'nav.life': "Conway's Way of Life",
+  'nav.howItWorks': 'How it works',
   'title.meadow': 'Meadow Makers · Living Systems Lab',
   'title.life': "Conway's Way of Life · Living Systems Lab",
+  'title.howItWorks': "How Conway's Way of Life works · Living Systems Lab",
   'title.impressum': 'Impressum & Datenschutz · Living Systems Lab',
 
   'common.speed': 'Simulation speed',
@@ -135,6 +137,40 @@ export const en = {
   'lifeStats.sprouts': 'Fresh Sprouts (Age 1)',
   'lifeStats.perennials': 'Perennials (Age 6+)',
   'lifeStats.withered': 'Withered Last Tick',
+
+  'howItWorks.eyebrow': 'Background',
+  'howItWorks.heading': "How Conway's Game of Life works",
+  'howItWorks.summaryHeading': 'The idea',
+  'howItWorks.summary1':
+    'Conway\'s Game of Life is a cellular automaton devised by the mathematician John Horton Conway in 1970. A grid of cells, each either alive or dead, evolves in discrete steps called generations.',
+  'howItWorks.summary2':
+    'There are no players and no goal. Every cell follows the same simple local rules, yet the patterns that emerge can move, oscillate, grow or die out.',
+  'howItWorks.showHeading': 'What this page shows',
+  'howItWorks.showIntro':
+    "The simulation on the Conway's Way of Life page runs these rules on a live grid:",
+  'howItWorks.showGrid':
+    'Cellular garden grid: each tile is a cell. Its colour shows its growth stage: fresh sprout, growing flora or perennial canopy.',
+  'howItWorks.showStats':
+    'Vital statistics: living cells, fresh sprouts (age 1), perennials (age 6+) and cells that withered in the last generation.',
+  'howItWorks.showControls':
+    'Controls: germinate (play), step one generation, reset, clear and adjust the growth speed.',
+  'howItWorks.showSeeds':
+    'Starter seeds: classic Methuselah patterns such as the acorn, R-pentomino, diehard, rabbits and the glider armada.',
+  'howItWorks.showBrush':
+    'Planting brush: place single cells, gliders, blinkers or acorns, or erase cells.',
+  'howItWorks.algoHeading': 'The algorithm',
+  'howItWorks.algoIntro':
+    'Each generation is computed in one pass from the current state, so all cells change at the same time:',
+  'howItWorks.algoNeighbors':
+    'Count neighbors: for each cell, count how many of its 8 neighbors (horizontal, vertical and diagonal) are alive.',
+  'howItWorks.algoWrap':
+    'Edges: with wrap-around borders on (the default), the grid acts as a torus, so the left edge touches the right and the top touches the bottom. Otherwise, cells beyond the edge count as dead.',
+  'howItWorks.algoBirth': 'Birth: a dead cell with exactly 3 live neighbors becomes alive.',
+  'howItWorks.algoSurvival': 'Survival: a live cell with 2 or 3 live neighbors stays alive.',
+  'howItWorks.algoDeath':
+    'Death: a live cell with fewer than 2 (underpopulation) or more than 3 (overpopulation) live neighbors dies.',
+  'howItWorks.algoNotation': 'In short, the rule is written B3/S23: birth on 3, survival on 2 or 3.',
+  'howItWorks.tryIt': 'Try it in the simulation',
 } as const;
 
 export type TranslationKey = keyof typeof en;
