@@ -1,0 +1,41 @@
+<main class="docs-shell">
+  <header>
+    <p class="eyebrow">{{ t('howItWorks.eyebrow') }}</p>
+    <h1>{{ t('howItWorks.heading') }}</h1>
+  </header>
+
+  <section aria-labelledby="docs-summary">
+    <h2 id="docs-summary">{{ t('howItWorks.summaryHeading') }}</h2>
+    <p>{{ t('howItWorks.summary1') }}</p>
+    <p>{{ t('howItWorks.summary2') }}</p>
+  </section>
+
+  <section aria-labelledby="docs-show">
+    <h2 id="docs-show">{{ t('howItWorks.showHeading') }}</h2>
+    <p>{{ t('howItWorks.showIntro') }}</p>
+    <ul>
+      <li>{{ t('howItWorks.showGrid') }}</li>
+      <li>{{ t('howItWorks.showStats') }}</li>
+      <li>{{ t('howItWorks.showControls') }}</li>
+      <li>{{ t('howItWorks.showSeeds') }}</li>
+      <li>{{ t('howItWorks.showBrush') }}</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="docs-algorithm">
+    <h2 id="docs-algorithm">{{ t('howItWorks.algoHeading') }}</h2>
+    <p>{{ t('howItWorks.algoIntro') }}</p>
+    <ol>
+      <li>{{ t('howItWorks.algoNeighbors') }}</li>
+      <li>{{ t('howItWorks.algoWrap') }}</li>
+      <li>{{ t('howItWorks.algoBirth') }}</li>
+      <li>{{ t('howItWorks.algoSurvival') }}</li>
+      <li>{{ t('howItWorks.algoDeath') }}</li>
+    </ol>
+    <p>{{ t('howItWorks.algoNotation') }}</p>
+  </section>
+
+  <p class="docs-cta">
+    <a routerLink="/game-of-life">{{ t('howItWorks.tryIt') }}</a>
+  </p>
+</main>
