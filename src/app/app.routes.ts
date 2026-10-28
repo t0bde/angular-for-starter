@@ -13,4 +13,10 @@ export const routes: Routes = [
       import('./features/game-of-life/game-of-life.component').then((m) => m.GameOfLifeComponent),
     title: "Conway's Way of Life · Living Systems Lab",
   },
+  {
+    path: 'impressum',
+    loadComponent: () =>
+      import('./features/impressum/impressum.component').then((m) => m.ImpressumComponent),
+    title: 'Impressum & Datenschutz · Living Systems Lab',
+  },
 ];

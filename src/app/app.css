@@ -53,6 +53,20 @@
   border-color: #f4c95d;
 }
 
+.lab-footer {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding: 10px 24px;
+  background: #173b31;
+  font-family: Verdana, sans-serif;
+  font-size: 0.76rem;
+}
+
+.footer-link {
+  color: #fff8e7;
+}
+
 @media (max-width: 760px) {
   .lab-navbar-inner {
     padding: 8px 14px;
