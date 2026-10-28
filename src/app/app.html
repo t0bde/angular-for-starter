@@ -16,6 +16,13 @@
       >
         {{ t('nav.life') }}
       </a>
+      <a
+        routerLink="/how-it-works"
+        routerLinkActive="active-link"
+        class="lab-link"
+      >
+        {{ t('nav.howItWorks') }}
+      </a>
     </div>
     <div class="lang-switch" role="group" [attr.aria-label]="t('app.language')">
       @for (option of languages; track option) {
