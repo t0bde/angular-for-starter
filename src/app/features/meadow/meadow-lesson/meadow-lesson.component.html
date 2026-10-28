@@ -1,15 +1,15 @@
 <section class="lesson-panel" aria-live="polite">
   <div>
-    <p class="eyebrow">Meadow clue</p>
+    <p class="eyebrow">{{ t('lesson.meadowClue') }}</p>
     <h2>{{ message() }}</h2>
   </div>
   <div
     class="food-chain"
     role="img"
-    aria-label="Food chain: plants feed plant eaters, which feed predators"
+    [attr.aria-label]="t('lesson.foodChain')"
   >
-    <span><img src="species/plant.svg" alt="" /></span><b>feeds</b
-    ><span><img src="species/herbivore.svg" alt="" /></span><b>feeds</b
+    <span><img src="species/plant.svg" alt="" /></span><b>{{ t('lesson.feeds') }}</b
+    ><span><img src="species/herbivore.svg" alt="" /></span><b>{{ t('lesson.feeds') }}</b
     ><span><img src="species/predator.svg" alt="" /></span>
   </div>
 </section>

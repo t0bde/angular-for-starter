@@ -1,4 +1,5 @@
-import { Component, computed, OnDestroy, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import { I18nService } from '../../shared/i18n/i18n.service';
 import {
   advanceSimulation,
   animalCell,
@@ -37,6 +38,7 @@ const defaultBehaviorSettings: BehaviorSettings = {
   templateUrl: './meadow.component.html',
 })
 export class MeadowComponent implements OnDestroy {
+  protected readonly t = inject(I18nService).t;
   readonly world = signal(createPreset('balanced'));
   readonly running = signal(false);
   readonly selectedTool = signal<Species>('plant');
@@ -104,11 +106,11 @@ export class MeadowComponent implements OnDestroy {
   }
   ecosystemMessage(): string {
     const { plant, herbivore, predator } = this.populations();
-    if (predator === 0) return 'No predators are here. Plant eaters may grow quickly.';
-    if (herbivore === 0) return 'Predators need plant eaters. Watch their energy closely.';
+    if (predator === 0) return this.t('meadow.msgNoPredators');
+    if (herbivore === 0) return this.t('meadow.msgNoHerbivores');
     return plant < herbivore * 2
-      ? 'Plants are scarce. Plant eaters may start to lose energy.'
-      : 'The food chain is active. Watch each group affect the next one.';
+      ? this.t('meadow.msgScarce')
+      : this.t('meadow.msgActive');
   }
 
   private hasLivingAnimals(): boolean {

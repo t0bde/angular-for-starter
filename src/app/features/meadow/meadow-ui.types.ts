@@ -4,7 +4,6 @@ import type { SimulationSettings } from './meadow-engine';
 export type PresetName = 'balanced' | 'meadow' | 'predator-boom';
 export interface SpeciesTool {
   id: Species;
-  label: string;
   mark: string;
 }
 export type BehaviorSettings = Pick<

@@ -1,4 +1,5 @@
-import { Component, computed, OnDestroy, signal } from '@angular/core';
+import { Component, inject, computed, OnDestroy, signal } from '@angular/core';
+import { I18nService } from '../../shared/i18n/i18n.service';
 import {
   advanceLifeGeneration,
   applyBrushToGrid,
@@ -31,6 +32,7 @@ const speedIntervals: Record<SimulationSpeed, number> = {
   styleUrl: './game-of-life.component.css',
 })
 export class GameOfLifeComponent implements OnDestroy {
+  protected readonly t = inject(I18nService).t;
   readonly presets: SeedPresetInfo[] = seedPresets;
 
   readonly activePreset = signal<SeedPresetName>('acorn');
@@ -47,6 +49,8 @@ export class GameOfLifeComponent implements OnDestroy {
   readonly activeSeedInfo = computed(
     () => this.presets.find((preset) => preset.id === this.activePreset()) ?? this.presets[0],
   );
+
+  readonly seedName = () => this.t(`seed.${this.activeSeedInfo().id}.label`);
 
   private intervalId?: number;
 
@@ -123,18 +127,18 @@ export class GameOfLifeComponent implements OnDestroy {
     const generation = this.world().generation;
 
     if (alive === 0) {
-      return 'The soil is quiet. Select a Methuselah seed preset or click tiles to plant a new colony.';
+      return this.t('life.msgQuiet');
     }
     if (generation === 0) {
-      return `Seed planted: ${this.activeSeedInfo().label} (${alive} cells). Press Play or Step to watch it germinate!`;
+      return this.t('life.msgPlanted', { name: this.seedName(), alive });
     }
     if (bornLastTick === 0 && diedLastTick === 0) {
-      return 'Equilibrium reached! Only stable still-lifes remain in the garden.';
+      return this.t('life.msgEquilibrium');
     }
     if (sprouts > perennials) {
-      return 'Rapid germination underway — new sprouts are blooming across open soil.';
+      return this.t('life.msgRapid');
     }
-    return 'Mature perennial clusters anchor the colony while oscillators and gliders ripple outward.';
+    return this.t('life.msgMature');
   }
 
   private start(): void {

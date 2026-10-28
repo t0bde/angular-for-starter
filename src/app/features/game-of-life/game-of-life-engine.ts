@@ -27,41 +27,29 @@ export interface LifeStats {
 
 export interface SeedPresetInfo {
   id: SeedPresetName;
-  label: string;
   cells: number;
-  description: string;
 }
 
 export const seedPresets: SeedPresetInfo[] = [
   {
     id: 'acorn',
-    label: 'Acorn Seed',
     cells: 7,
-    description: 'A tiny 7-cell seed that germinates for thousands of generations into gliders and oaks.',
   },
   {
     id: 'r-pentomino',
-    label: 'R-Pentomino',
     cells: 5,
-    description: "Conway's classic 5-cell sprout that erupts into vigorous, long-lived activity.",
   },
   {
     id: 'diehard',
-    label: 'Diehard Seed',
     cells: 7,
-    description: 'An ephemeral 7-cell bloom that flourishes for 130 generations before vanishing.',
   },
   {
     id: 'rabbits',
-    label: 'Rabbits Seed',
     cells: 9,
-    description: 'A 9-cell starter cluster that multiplies rapidly into a dense cellular meadow.',
   },
   {
     id: 'glider-fleet',
-    label: 'Glider Armada',
     cells: 15,
-    description: 'Three synchronized gliders drifting diagonally across the garden.',
   },
 ];
 

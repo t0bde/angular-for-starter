@@ -1,29 +1,29 @@
-<section class="stats-strip" aria-label="Colony vital statistics">
+<section class="stats-strip" [attr.aria-label]="t('lifeStats.label')">
   <article class="stat-card living">
     <span class="stat-mark" aria-hidden="true">LF</span>
     <div>
-      <span class="stat-label">Living Cells</span>
+      <span class="stat-label">{{ t('lifeStats.living') }}</span>
       <strong>{{ stats().alive }}</strong>
     </div>
   </article>
   <article class="stat-card sprouts">
     <span class="stat-mark" aria-hidden="true">+B</span>
     <div>
-      <span class="stat-label">Fresh Sprouts (Age 1)</span>
+      <span class="stat-label">{{ t('lifeStats.sprouts') }}</span>
       <strong>{{ stats().sprouts }}</strong>
     </div>
   </article>
   <article class="stat-card perennials">
     <span class="stat-mark" aria-hidden="true">OK</span>
     <div>
-      <span class="stat-label">Perennials (Age 6+)</span>
+      <span class="stat-label">{{ t('lifeStats.perennials') }}</span>
       <strong>{{ stats().perennials }}</strong>
     </div>
   </article>
   <article class="stat-card withered">
     <span class="stat-mark" aria-hidden="true">-D</span>
     <div>
-      <span class="stat-label">Withered Last Tick</span>
+      <span class="stat-label">{{ t('lifeStats.withered') }}</span>
       <strong>{{ stats().diedLastTick }}</strong>
     </div>
   </article>

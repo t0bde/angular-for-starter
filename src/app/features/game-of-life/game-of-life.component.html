@@ -1,18 +1,18 @@
 <main class="life-shell">
   <header class="topbar">
     <div>
-      <p class="eyebrow">Cellular automata garden · B3/S23</p>
-      <h1>Conway's Way of Life</h1>
+      <p class="eyebrow">{{ t('life.eyebrow') }}</p>
+      <h1>{{ t('life.heading') }}</h1>
     </div>
     <div class="topbar-badges">
-      <span class="seed-badge">Seed: {{ activeSeedInfo().label }}</span>
-      <div class="step-counter" aria-live="polite">Gen {{ world().generation }}</div>
+      <span class="seed-badge">{{ t('life.seed', { name: seedName() }) }}</span>
+      <div class="step-counter" aria-live="polite">{{ t('life.gen', { generation: world().generation }) }}</div>
     </div>
   </header>
 
   <app-life-stats [stats]="stats()" />
 
-  <section class="playground" aria-label="Conway's Game of Life simulation">
+  <section class="playground" [attr.aria-label]="t('life.simulation')">
     <app-life-controls
       [running]="running()"
       [speed]="speed()"
