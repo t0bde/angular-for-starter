@@ -40,6 +40,8 @@ describe('ecosystem engine', () => {
 
     const next = advanceSimulation(state, () => 0, { ...noGrowthSettings, plantGrowthChance: 1 });
 
+    // Growth fills (1,0) and (1,1); the herbivore then moves onto (1,1) without erasing it.
+    expect(next.grid[1][0]).toEqual({ species: 'plant' });
     expect(next.grid[1][1]).toEqual(animalCell('herbivore', 4, true));
     expect(countPopulations(next.grid)).toEqual({ plant: 4, herbivore: 1, predator: 0 });
   });
