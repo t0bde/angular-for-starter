@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  min-height: calc(100dvh - 100px);
+  background: #e8f2c7;
+  color: #173b31;
+  font-family: Georgia, serif;
+}
+.legal-shell {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+h1 {
+  margin: 24px 0 8px;
+}
+h2 {
+  margin: 16px 0 4px;
+  font-size: 1.05rem;
+}
+p {
+  margin: 0;
+}
+a {
+  color: #173b31;
+}
