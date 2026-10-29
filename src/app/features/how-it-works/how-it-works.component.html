@@ -1,41 +1,175 @@
 <main class="docs-shell">
-  <header>
-    <p class="eyebrow">{{ t('howItWorks.eyebrow') }}</p>
-    <h1>{{ t('howItWorks.heading') }}</h1>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">{{ t('howItWorks.eyebrow') }}</p>
+      <h1>{{ t('howItWorks.heading') }}</h1>
+    </div>
+    <span class="rule-badge" aria-hidden="true">B3 / S23</span>
   </header>
 
-  <section aria-labelledby="docs-summary">
-    <h2 id="docs-summary">{{ t('howItWorks.summaryHeading') }}</h2>
-    <p>{{ t('howItWorks.summary1') }}</p>
-    <p>{{ t('howItWorks.summary2') }}</p>
+  <section class="doc-card idea-card" aria-labelledby="docs-summary">
+    <div class="idea-copy">
+      <h2 id="docs-summary">{{ t('howItWorks.summaryHeading') }}</h2>
+      <p>{{ t('howItWorks.summary1') }}</p>
+      <p>{{ t('howItWorks.summary2') }}</p>
+    </div>
+    <div class="stage-showcase" aria-hidden="true">
+      <div class="stage-pill">
+        <span class="swatch sprout"></span>
+        <span>{{ t('howItWorks.stageAge1') }}</span>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage-pill">
+        <span class="swatch flora"></span>
+        <span>{{ t('howItWorks.stageAge2To5') }}</span>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage-pill">
+        <span class="swatch perennial"></span>
+        <span>{{ t('howItWorks.stageAge6Plus') }}</span>
+      </div>
+    </div>
   </section>
 
-  <section aria-labelledby="docs-show">
+  <section class="doc-card" aria-labelledby="docs-show">
     <h2 id="docs-show">{{ t('howItWorks.showHeading') }}</h2>
-    <p>{{ t('howItWorks.showIntro') }}</p>
-    <ul>
-      <li>{{ t('howItWorks.showGrid') }}</li>
-      <li>{{ t('howItWorks.showStats') }}</li>
-      <li>{{ t('howItWorks.showControls') }}</li>
-      <li>{{ t('howItWorks.showSeeds') }}</li>
-      <li>{{ t('howItWorks.showBrush') }}</li>
+    <p class="section-intro">{{ t('howItWorks.showIntro') }}</p>
+    <ul class="feature-grid">
+      <li class="feature-item">
+        <div class="feature-graphic" aria-hidden="true">
+          <span class="swatch sprout"></span>
+          <span class="swatch flora"></span>
+          <span class="swatch perennial"></span>
+        </div>
+        <p>{{ t('howItWorks.showGrid') }}</p>
+      </li>
+      <li class="feature-item">
+        <div class="feature-graphic" aria-hidden="true">
+          <span class="stat-chip living">LF</span>
+          <span class="stat-chip sprouts">+B</span>
+          <span class="stat-chip perennials">OK</span>
+          <span class="stat-chip withered">-D</span>
+        </div>
+        <p>{{ t('howItWorks.showStats') }}</p>
+      </li>
+      <li class="feature-item">
+        <div class="feature-graphic" aria-hidden="true">
+          <span class="ctrl-chip primary">▶</span>
+          <span class="ctrl-chip">+1</span>
+          <span class="ctrl-chip">↻</span>
+        </div>
+        <p>{{ t('howItWorks.showControls') }}</p>
+      </li>
+      <li class="feature-item">
+        <div class="feature-graphic" aria-hidden="true">
+          <div class="pattern-mini acorn-grid">
+            @for (on of acornPreview; track $index) {
+              <span class="pattern-cell" [class.on]="on"></span>
+            }
+          </div>
+        </div>
+        <p>{{ t('howItWorks.showSeeds') }}</p>
+      </li>
+      <li class="feature-item">
+        <div class="feature-graphic" aria-hidden="true">
+          <div class="pattern-mini glider-grid">
+            @for (on of gliderPreview; track $index) {
+              <span class="pattern-cell" [class.on]="on"></span>
+            }
+          </div>
+        </div>
+        <p>{{ t('howItWorks.showBrush') }}</p>
+      </li>
     </ul>
   </section>
 
-  <section aria-labelledby="docs-algorithm">
+  <section class="doc-card" aria-labelledby="docs-algorithm">
     <h2 id="docs-algorithm">{{ t('howItWorks.algoHeading') }}</h2>
-    <p>{{ t('howItWorks.algoIntro') }}</p>
-    <ol>
-      <li>{{ t('howItWorks.algoNeighbors') }}</li>
-      <li>{{ t('howItWorks.algoWrap') }}</li>
-      <li>{{ t('howItWorks.algoBirth') }}</li>
-      <li>{{ t('howItWorks.algoSurvival') }}</li>
-      <li>{{ t('howItWorks.algoDeath') }}</li>
+    <p class="section-intro">{{ t('howItWorks.algoIntro') }}</p>
+
+    <ol class="algo-list">
+      <li class="algo-step-box">
+        <div class="mini-grid" aria-hidden="true">
+          @for (cell of neighborGrid; track $index) {
+            <span class="mini-cell" [class]="cell">
+              @if (cell === 'center-target') {
+                <b>?</b>
+              } @else if (cell !== 'empty') {
+                <i class="dot"></i>
+              }
+            </span>
+          }
+        </div>
+        <div>
+          <span class="step-tag">{{ t('howItWorks.diagramNeighborsTag') }}</span>
+          <p>{{ t('howItWorks.algoNeighbors') }}</p>
+        </div>
+      </li>
+
+      <li class="algo-step-box">
+        <div class="torus-diagram" aria-hidden="true">
+          <span class="torus-edge top">↕</span>
+          <div class="torus-box">
+            <span class="torus-arrow">↔</span>
+          </div>
+        </div>
+        <div>
+          <span class="step-tag">{{ t('howItWorks.diagramTorusTag') }}</span>
+          <p>{{ t('howItWorks.algoWrap') }}</p>
+        </div>
+      </li>
+
+      @for (card of ruleCards; track card.id) {
+        <li class="rule-card" [attr.data-rule]="card.id">
+          <div class="rule-card-head">
+            <span class="rule-pill-badge">{{ card.badge }}</span>
+            <span class="step-tag">{{ t(card.tagKey) }}</span>
+          </div>
+
+          <div class="transition-pair" aria-hidden="true">
+            <div class="transition-stage">
+              <span class="gen-label">{{ t('howItWorks.diagramBefore') }}</span>
+              <div class="mini-grid">
+                @for (cell of card.before; track $index) {
+                  <span class="mini-cell" [class]="cell">
+                    @if (cell !== 'empty' && cell !== 'center-dead') {
+                      <i class="dot"></i>
+                    }
+                  </span>
+                }
+              </div>
+            </div>
+
+            <span class="transition-arrow">→</span>
+
+            <div class="transition-stage">
+              <span class="gen-label">{{ t('howItWorks.diagramAfter') }}</span>
+              <div class="mini-grid">
+                @for (cell of card.after; track $index) {
+                  <span class="mini-cell" [class]="cell">
+                    @if (cell === 'center-withered') {
+                      <b>×</b>
+                    } @else if (cell !== 'empty') {
+                      <i class="dot"></i>
+                    }
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <p>{{ t(card.textKey) }}</p>
+        </li>
+      }
     </ol>
-    <p>{{ t('howItWorks.algoNotation') }}</p>
+
+    <div class="notation-banner">
+      <span class="rule-pill-badge">B3/S23</span>
+      <p>{{ t('howItWorks.algoNotation') }}</p>
+    </div>
   </section>
 
   <p class="docs-cta">
-    <a routerLink="/game-of-life">{{ t('howItWorks.tryIt') }}</a>
+    <a routerLink="/game-of-life">{{ t('howItWorks.tryIt') }} →</a>
   </p>
 </main>

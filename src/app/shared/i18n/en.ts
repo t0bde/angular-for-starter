@@ -170,6 +170,16 @@ export const en = {
   'howItWorks.algoDeath':
     'Death: a live cell with fewer than 2 (underpopulation) or more than 3 (overpopulation) live neighbors dies.',
   'howItWorks.algoNotation': 'In short, the rule is written B3/S23: birth on 3, survival on 2 or 3.',
+  'howItWorks.stageAge1': 'Age 1',
+  'howItWorks.stageAge2To5': 'Age 2–5',
+  'howItWorks.stageAge6Plus': 'Age 6+',
+  'howItWorks.diagramBefore': 'Center · before',
+  'howItWorks.diagramAfter': 'Center · after',
+  'howItWorks.diagramNeighborsTag': '8-cell Moore neighborhood',
+  'howItWorks.diagramTorusTag': 'Top ↔ Bottom · Left ↔ Right',
+  'howItWorks.diagramBirthTag': '3 neighbors → Sprouts (B3)',
+  'howItWorks.diagramSurvivalTag': '2–3 neighbors → Thrives (S23)',
+  'howItWorks.diagramDeathTag': '<2 or >3 neighbors → Withers',
   'howItWorks.tryIt': 'Try it in the simulation',
 } as const;
 

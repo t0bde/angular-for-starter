@@ -177,5 +177,15 @@ export const de: Record<TranslationKey, string> = {
   'howItWorks.algoDeath':
     'Tod: Eine lebende Zelle mit weniger als 2 (Unterbevölkerung) oder mehr als 3 (Überbevölkerung) lebenden Nachbarn stirbt.',
   'howItWorks.algoNotation': 'Kurz geschrieben lautet die Regel B3/S23: Geburt bei 3, Überleben bei 2 oder 3.',
+  'howItWorks.stageAge1': 'Alter 1',
+  'howItWorks.stageAge2To5': 'Alter 2–5',
+  'howItWorks.stageAge6Plus': 'Alter 6+',
+  'howItWorks.diagramBefore': 'Mitte · vorher',
+  'howItWorks.diagramAfter': 'Mitte · nachher',
+  'howItWorks.diagramNeighborsTag': '8er-Moore-Nachbarschaft',
+  'howItWorks.diagramTorusTag': 'Oben ↔ Unten · Links ↔ Rechts',
+  'howItWorks.diagramBirthTag': '3 Nachbarn → Keimt (B3)',
+  'howItWorks.diagramSurvivalTag': '2–3 Nachbarn → Gedeiht (S23)',
+  'howItWorks.diagramDeathTag': '<2 oder >3 Nachbarn → Welkt',
   'howItWorks.tryIt': 'Im Simulator ausprobieren',
 };

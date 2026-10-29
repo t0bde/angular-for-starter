@@ -29,13 +29,29 @@ describe('HowItWorks', () => {
     expect(text).toContain('B3/S23');
   });
 
+  it('renders 3x3 graphical rule transition diagrams for Birth, Survival, and Death', async () => {
+    const root = await render('en');
+
+    const ruleCards = root.querySelectorAll('.rule-card');
+    expect(ruleCards).toHaveLength(3);
+    expect(root.querySelectorAll('.mini-grid')).toHaveLength(7);
+  });
+
   it('translates the page to German', async () => {
     const root = await render('de');
 
     const text = root.textContent;
     expect(text).toContain('Die Idee');
     expect(text).toContain('Der Algorithmus');
+    expect(text).toContain('Alter 1');
+    expect(text).toContain('Alter 2–5');
+    expect(text).toContain('Alter 6+');
+    expect(text).toContain('Mitte · vorher');
+    expect(text).toContain('Mitte · nachher');
+    expect(text).toContain('B3 / S23');
     expect(text).not.toContain('The algorithm');
+    expect(text).not.toContain('Age 1');
+    expect(text).not.toContain('Rule B3 / S23');
   });
 
   it('links to the simulation page', async () => {
