@@ -60,6 +60,12 @@ describe('LifeGridComponent', () => {
     expect(component.cellLabel(aliveCell(1), 1, 2)).toBe(
       'Row 2, column 3: fresh sprout (age 1)',
     );
+    expect(component.cellLabel(aliveCell(5), 1, 2)).toBe(
+      'Row 2, column 3: growing flora (age 5)',
+    );
+    expect(component.cellLabel(aliveCell(6), 1, 2)).toBe(
+      'Row 2, column 3: perennial canopy (age 6)',
+    );
   });
 
   it('moves the active cell in each arrow direction', () => {

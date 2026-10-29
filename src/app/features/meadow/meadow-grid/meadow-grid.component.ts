@@ -3,6 +3,7 @@ import { I18nService } from '../../../shared/i18n/i18n.service';
 import type { EcosystemCell } from '../meadow-engine';
 import { speciesImages } from '../meadow-ui.types';
 import type { CellPosition } from '../../../shared/simulation.types';
+import { moveGridFocus } from '../../../shared/grid-navigation';
 
 @Component({
   selector: 'app-meadow-grid',
@@ -35,18 +36,14 @@ export class MeadowGridComponent {
     this.cellPainted.emit(position);
   }
   moveFocus(event: KeyboardEvent, row: number, column: number): void {
-    const rows = this.grid().length;
-    const columns = this.grid()[0]?.length ?? 0;
-    const next = { row, column };
-    if (event.key === 'ArrowUp') next.row = Math.max(0, row - 1);
-    else if (event.key === 'ArrowDown') next.row = Math.min(rows - 1, row + 1);
-    else if (event.key === 'ArrowLeft') next.column = Math.max(0, column - 1);
-    else if (event.key === 'ArrowRight') next.column = Math.min(columns - 1, column + 1);
-    else return;
-    event.preventDefault();
-    this.activeCellChanged.emit(next);
-    queueMicrotask(() =>
-      document.getElementById(`habitat-cell-${next.row}-${next.column}`)?.focus(),
+    moveGridFocus(
+      event,
+      row,
+      column,
+      this.grid().length,
+      this.grid()[0]?.length ?? 0,
+      'habitat-cell',
+      (position) => this.activeCellChanged.emit(position),
     );
   }
 }
