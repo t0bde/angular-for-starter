@@ -11,7 +11,9 @@ import {
 const noGrowthSettings = {
   plantGrowthChance: 0,
   herbivoreReproductionChance: 0,
+  herbivoreFoodEnergy: 4,
   predatorReproductionChance: 0,
+  predatorFoodEnergy: 5,
 };
 
 function stateFrom(grid: EcosystemCell[][]): SimulationState {

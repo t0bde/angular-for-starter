@@ -54,16 +54,16 @@ interface AnimalIntent {
 }
 
 export const defaultSimulationSettings: SimulationSettings = {
-  plantGrowthChance: 0.14,
+  plantGrowthChance: 0.4,
   plantNeighborMinimum: 2,
   herbivoreStartingEnergy: 5,
   predatorStartingEnergy: 6,
-  herbivoreFoodEnergy: 4,
-  predatorFoodEnergy: 5,
+  herbivoreFoodEnergy: 6,
+  predatorFoodEnergy: 2,
   herbivoreReproductionEnergy: 9,
   predatorReproductionEnergy: 11,
-  herbivoreReproductionChance: 0.18,
-  predatorReproductionChance: 0.12,
+  herbivoreReproductionChance: 0.28,
+  predatorReproductionChance: 0.06,
   reproductionEnergyCost: 3,
 };
 

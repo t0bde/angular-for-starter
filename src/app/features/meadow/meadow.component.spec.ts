@@ -20,6 +20,29 @@ describe('MeadowComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('starts with the long-running ecosystem settings and restores them on reset', () => {
+    const expected = {
+      plantGrowthChance: 0.4,
+      herbivoreReproductionChance: 0.28,
+      herbivoreFoodEnergy: 6,
+      predatorReproductionChance: 0.06,
+      predatorFoodEnergy: 2,
+    };
+
+    expect(component.behaviorSettings()).toEqual(expected);
+
+    component.updateBehavior({
+      plantGrowthChance: 0,
+      herbivoreReproductionChance: 0,
+      herbivoreFoodEnergy: 1,
+      predatorReproductionChance: 0,
+      predatorFoodEnergy: 1,
+    });
+    component.reset();
+
+    expect(component.behaviorSettings()).toEqual(expected);
+  });
+
   it('renders the ecosystem controls and can advance one day', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
