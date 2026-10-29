@@ -1,17 +1,13 @@
 import type { TranslationKey } from './en';
 
 export const de: Record<TranslationKey, string> = {
-  'app.title': 'Labor für lebende Systeme',
+  'app.title': 'Living Systems Lab',
   'app.navLabel': 'Seiten des Labors für lebende Systeme',
   'app.language': 'Sprache',
   'app.footerLegal': 'Impressum & Datenschutz',
   'nav.meadow': 'Wiesenmacher',
   'nav.life': 'Conways Spiel des Lebens',
-  'title.meadow': 'Wiesenmacher · Labor für lebende Systeme',
-  'title.life': 'Conways Spiel des Lebens · Labor für lebende Systeme',
   'nav.howItWorks': 'So funktioniert es',
-  'title.howItWorks': 'So funktioniert Conways Spiel des Lebens · Labor für lebende Systeme',
-  'title.impressum': 'Impressum & Datenschutz · Labor für lebende Systeme',
 
   'common.speed': 'Simulationsgeschwindigkeit',
   'speed.slow': 'langsam',
@@ -84,7 +80,7 @@ export const de: Record<TranslationKey, string> = {
   'life.msgRapid':
     'Schnelles Keimen: Neue Triebe sprießen auf dem freien Boden.',
   'life.msgMature':
-    'Ausgewachsene Dauerkolonien halten die Kolonie zusammen, während Oszillatoren und Gleiter nach außen wandern.',
+    'Ältere Zellgruppen stabilisieren die Kolonie, während Oszillatoren und Gleiter sich nach außen ausbreiten.',
 
   'lifeControls.label': 'Gartensteuerung',
   'lifeControls.germinate': 'Keimen lassen',
@@ -105,7 +101,7 @@ export const de: Record<TranslationKey, string> = {
   'brush.eraser': 'Entfernen / Löschen',
   'seed.acorn.label': 'Eichel-Muster',
   'seed.acorn.description':
-    'Ein winziges Muster aus 7 Zellen, das tausende Generationen lang zu Gleitern und Eichen heranwächst.',
+    'Ein winziges Muster aus 7 Zellen, aus dem über Tausende von Generationen Gleiter und stabile Muster entstehen.',
   'seed.r-pentomino.label': 'R-Pentomino',
   'seed.r-pentomino.description':
     'Conways klassischer Trieb aus 5 Zellen, der in lebhafte, langlebige Aktivität ausbricht.',
@@ -124,11 +120,11 @@ export const de: Record<TranslationKey, string> = {
   'lifeGrid.cell': 'Zeile {row}, Spalte {column}: {stage} (Alter {age})',
   'stage.sprout': 'frischer Trieb',
   'stage.flora': 'wachsende Pflanze',
-  'stage.perennial': 'Dauerbewuchs',
+  'stage.perennial': 'alte Zelle',
   'lifeGrid.legend': 'Legende der Wachstumsstufen',
-  'lifeGrid.legendSprout': 'Frischer Trieb (Alter 1 · Geboren durch 3 Nachbarn)',
+  'lifeGrid.legendSprout': 'Frischer Trieb (Alter 1 · entsteht bei 3 Nachbarn)',
   'lifeGrid.legendFlora': 'Wachsende Pflanze (Alter 2–5)',
-  'lifeGrid.legendPerennial': 'Dauerbewuchs (Alter 6+ · Stabil)',
+  'lifeGrid.legendPerennial': 'Alte Zelle (Alter 6+ · stabil)',
 
   'lifeLesson.label': 'Conways Regeln des Lebens',
   'lifeLesson.eyebrow': 'Feldbeobachtung',
@@ -142,7 +138,7 @@ export const de: Record<TranslationKey, string> = {
   'lifeStats.label': 'Kennzahlen der Kolonie',
   'lifeStats.living': 'Lebende Zellen',
   'lifeStats.sprouts': 'Frische Triebe (Alter 1)',
-  'lifeStats.perennials': 'Dauerpflanzen (Alter 6+)',
+  'lifeStats.perennials': 'Alte Zellen (Alter 6+)',
   'lifeStats.withered': 'Verwelkt im letzten Schritt',
 
   'howItWorks.eyebrow': 'Hintergrund',
@@ -184,8 +180,8 @@ export const de: Record<TranslationKey, string> = {
   'howItWorks.diagramAfter': 'Mitte · nachher',
   'howItWorks.diagramNeighborsTag': '8er-Moore-Nachbarschaft',
   'howItWorks.diagramTorusTag': 'Oben ↔ Unten · Links ↔ Rechts',
-  'howItWorks.diagramBirthTag': '3 Nachbarn → Keimt (B3)',
-  'howItWorks.diagramSurvivalTag': '2–3 Nachbarn → Gedeiht (S23)',
-  'howItWorks.diagramDeathTag': '<2 oder >3 Nachbarn → Welkt',
+  'howItWorks.diagramBirthTag': '3 Nachbarn → Geburt (B3)',
+  'howItWorks.diagramSurvivalTag': '2–3 Nachbarn → Überleben (S23)',
+  'howItWorks.diagramDeathTag': '<2 oder >3 Nachbarn → Tod',
   'howItWorks.tryIt': 'Im Simulator ausprobieren',
 };

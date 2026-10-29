@@ -54,6 +54,7 @@ describe('I18nService', () => {
 
     expect(buttons[1].getAttribute('aria-pressed')).toBe('true');
     expect(buttons[0].getAttribute('aria-pressed')).toBe('false');
+    expect(root.querySelector('.lab-brand')?.textContent?.trim()).toBe('Living Systems Lab');
     expect(root.textContent).toContain('Wiesenmacher');
   });
 
