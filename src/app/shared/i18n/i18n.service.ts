@@ -22,17 +22,11 @@ function initialLang(): Lang {
 @Injectable({ providedIn: 'root' })
 export class I18nService {
   readonly lang = signal<Lang>(initialLang());
-  // Set by the title strategy so the page title follows language changes.
-  readonly titleKey = signal<string | null>(null);
 
   constructor() {
     effect(() => {
       const lang = this.lang();
       document.documentElement.lang = lang;
-      const key = this.titleKey();
-      if (key) {
-        document.title = this.t(key);
-      }
     });
   }
 

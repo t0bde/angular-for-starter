@@ -6,10 +6,6 @@ export const en = {
   'nav.meadow': 'Meadow Makers',
   'nav.life': "Conway's Way of Life",
   'nav.howItWorks': 'How it works',
-  'title.meadow': 'Meadow Makers · Living Systems Lab',
-  'title.life': "Conway's Way of Life · Living Systems Lab",
-  'title.howItWorks': "How Conway's Way of Life works · Living Systems Lab",
-  'title.impressum': 'Impressum & Datenschutz · Living Systems Lab',
 
   'common.speed': 'Simulation speed',
   'speed.slow': 'slow',
