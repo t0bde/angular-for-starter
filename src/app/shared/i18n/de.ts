@@ -60,6 +60,12 @@ export const de: Record<TranslationKey, string> = {
   'population.plants': 'Pflanzen',
   'population.herbivores': 'Pflanzenfresser',
   'population.predators': 'Raubtiere',
+  'cellInfo.thisAnimal': 'Dieses Tier',
+  'cellInfo.energy': 'Energie',
+  'cellInfo.position': 'Position',
+  'cellInfo.positionValue': 'Zeile {row}, Spalte {column}',
+  'cellInfo.hiddenPlant': 'Pflanze darunter',
+  'cellInfo.yes': 'ja',
 
   'lesson.meadowClue': 'Wiesen-Hinweis',
   'lesson.foodChain':

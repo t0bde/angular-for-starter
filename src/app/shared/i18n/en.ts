@@ -56,6 +56,12 @@ export const en = {
   'population.plants': 'Plants',
   'population.herbivores': 'Plant eaters',
   'population.predators': 'Predators',
+  'cellInfo.thisAnimal': 'This animal',
+  'cellInfo.energy': 'Energy',
+  'cellInfo.position': 'Position',
+  'cellInfo.positionValue': 'Row {row}, column {column}',
+  'cellInfo.hiddenPlant': 'Plant underneath',
+  'cellInfo.yes': 'yes',
 
   'lesson.meadowClue': 'Meadow clue',
   'lesson.foodChain': 'Food chain: plants feed plant eaters, which feed predators',

@@ -1,0 +1,25 @@
+<aside #card class="cell-info" [style.left.px]="left()" [style.top.px]="top()">
+  <header>
+    @if (image(); as src) {
+      <img [src]="src" alt="" aria-hidden="true" />
+    }
+    <h2>{{ t('species.' + info().cell.species) }}</h2>
+  </header>
+  <p class="cell-info-title">{{ t('cellInfo.thisAnimal') }}</p>
+  <dl>
+    <div>
+      <dt>{{ t('cellInfo.energy') }}</dt>
+      <dd>{{ info().cell.energy ?? '–' }}</dd>
+    </div>
+    <div>
+      <dt>{{ t('cellInfo.position') }}</dt>
+      <dd>{{ t('cellInfo.positionValue', { row: info().position.row + 1, column: info().position.column + 1 }) }}</dd>
+    </div>
+    @if (info().cell.plantBeneath) {
+      <div>
+        <dt>{{ t('cellInfo.hiddenPlant') }}</dt>
+        <dd>{{ t('cellInfo.yes') }}</dd>
+      </div>
+    }
+  </dl>
+</aside>

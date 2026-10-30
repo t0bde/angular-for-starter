@@ -1,0 +1,53 @@
+:host {
+  display: contents;
+}
+.cell-info {
+  position: fixed;
+  z-index: 10;
+  box-sizing: border-box;
+  width: 200px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 4px 4px 0 rgba(23, 59, 49, 0.18);
+  pointer-events: none;
+  font-size: 0.8rem;
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+header img {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+}
+h2 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.cell-info-title {
+  margin: 8px 0 4px;
+  font:
+    700 0.7rem Verdana,
+    sans-serif;
+  text-transform: uppercase;
+}
+dl {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+dt {
+  color: #316749;
+}
+dd {
+  margin: 0;
+  font-family: Verdana, sans-serif;
+}

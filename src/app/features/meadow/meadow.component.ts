@@ -13,9 +13,16 @@ import {
 } from './meadow-engine';
 import { MeadowGridComponent } from './meadow-grid/meadow-grid.component';
 import { MeadowLessonComponent } from './meadow-lesson/meadow-lesson.component';
+import { CellInfoPopoverComponent } from './cell-info-popover/cell-info-popover.component';
 import { PopulationSummaryComponent } from './population-summary/population-summary.component';
 import { SimulationControlsComponent } from './simulation-controls/simulation-controls.component';
-import type { BehaviorSettings, PresetName } from './meadow-ui.types';
+import type {
+  BehaviorSettings,
+  CellInspectRequest,
+  CellInspectState,
+  CellInspection,
+  PresetName,
+} from './meadow-ui.types';
 import type { CellPosition, SimulationSpeed } from '../../shared/simulation.types';
 const speedIntervals: Record<SimulationSpeed, number> = { slow: 900, normal: 450, fast: 180 };
 const defaultBehaviorSettings: BehaviorSettings = {
@@ -28,6 +35,7 @@ const defaultBehaviorSettings: BehaviorSettings = {
 
 @Component({
   imports: [
+    CellInfoPopoverComponent,
     MeadowGridComponent,
     MeadowLessonComponent,
     PopulationSummaryComponent,
@@ -46,6 +54,15 @@ export class MeadowComponent implements OnDestroy {
   readonly activeCell = signal({ row: 0, column: 0 });
   readonly behaviorSettings = signal<BehaviorSettings>({ ...defaultBehaviorSettings });
   readonly populations = computed(() => countPopulations(this.world().grid));
+  readonly inspection = signal<CellInspectState | null>(null);
+  readonly inspectedAnimal = computed<CellInspection | null>(() => {
+    const state = this.inspection();
+    if (!state) return null;
+    const cell = this.world().grid[state.position.row]?.[state.position.column];
+    if (!cell || cell.species !== state.species) return null;
+    if (cell.species !== 'herbivore' && cell.species !== 'predator') return null;
+    return { ...state, cell };
+  });
   private intervalId?: number;
 
   ngOnDestroy(): void {
@@ -60,6 +77,7 @@ export class MeadowComponent implements OnDestroy {
   }
   step(): void {
     this.world.update((state) => advanceSimulation(state, undefined, this.behaviorSettings()));
+    this.clearStaleInspection();
     if (!this.hasLivingAnimals()) {
       this.stop();
     }
@@ -68,10 +86,12 @@ export class MeadowComponent implements OnDestroy {
     this.stop();
     this.world.set(createPreset('balanced'));
     this.behaviorSettings.set({ ...defaultBehaviorSettings });
+    this.inspection.set(null);
   }
   applyPreset(preset: PresetName): void {
     this.stop();
     this.world.set(createPreset(preset));
+    this.inspection.set(null);
   }
   selectTool(tool: Species): void {
     this.selectedTool.set(tool);
@@ -88,12 +108,27 @@ export class MeadowComponent implements OnDestroy {
     this.world.update((state) =>
       paintCell(state, position, this.selectedTool()),
     );
+    this.clearStaleInspection();
     if (!this.hasLivingAnimals()) {
       this.stop();
     }
   }
   setActiveCell(position: CellPosition): void {
     this.activeCell.set(position);
+  }
+  previewCellInfo(request: CellInspectRequest): void {
+    if (this.inspection()?.pinned) return;
+    this.inspection.set(this.inspectState(request, false));
+  }
+  endPreviewCellInfo(): void {
+    if (this.inspection()?.pinned) return;
+    this.inspection.set(null);
+  }
+  pinCellInfo(request: CellInspectRequest): void {
+    this.inspection.set(this.inspectState(request, true));
+  }
+  dismissCellInfo(): void {
+    this.inspection.set(null);
   }
   updateBehavior(patch: Partial<BehaviorSettings>): void {
     this.behaviorSettings.update((current) => ({ ...current, ...patch }));
@@ -116,6 +151,16 @@ export class MeadowComponent implements OnDestroy {
   private hasLivingAnimals(): boolean {
     const { herbivore, predator } = this.populations();
     return herbivore > 0 || predator > 0;
+  }
+  private inspectState(request: CellInspectRequest, pinned: boolean): CellInspectState {
+    const cell = this.world().grid[request.position.row]?.[request.position.column];
+    return { ...request, pinned, species: cell?.species ?? 'plant' };
+  }
+  // Drops the popover once its cell no longer holds the animal it was opened for.
+  private clearStaleInspection(): void {
+    if (this.inspection() && !this.inspectedAnimal()) {
+      this.inspection.set(null);
+    }
   }
   private start(): void {
     if (!this.hasLivingAnimals()) {

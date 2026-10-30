@@ -26,6 +26,8 @@
   border-bottom: 1px solid rgba(23, 59, 49, 0.16);
   background: #b8dc80;
   cursor: pointer;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .habitat-cell:focus-visible {
   outline: 3px solid var(--water);

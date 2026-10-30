@@ -24,6 +24,9 @@
       [activeCell]="activeCell()"
       (cellPainted)="paint($event)"
       (activeCellChanged)="setActiveCell($event)"
+      (cellHovered)="previewCellInfo($event)"
+      (cellHoverEnded)="endPreviewCellInfo()"
+      (cellPinned)="pinCellInfo($event)"
     />
   </section>
   <section class="behavior-panel" [attr.aria-label]="t('meadow.behaviorLabel')">
@@ -95,4 +98,7 @@
     </div>
   </section>
   <app-meadow-lesson [message]="ecosystemMessage()" />
+  @if (inspectedAnimal(); as info) {
+    <app-cell-info-popover [info]="info" (dismissed)="dismissCellInfo()" />
+  }
 </main>

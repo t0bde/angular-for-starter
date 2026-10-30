@@ -9,7 +9,12 @@
           type="button"
           [attr.tabindex]="cellTabIndex(rowIndex, columnIndex)"
           [attr.aria-label]="cellLabel(cell, rowIndex, columnIndex)"
-          (click)="paint(rowIndex, columnIndex)"
+          (click)="paint(rowIndex, columnIndex, $event)"
+          (pointerenter)="hoverStart($event, rowIndex, columnIndex)"
+          (pointerleave)="hoverEnd($event)"
+          (pointerdown)="pressStart($event, rowIndex, columnIndex)"
+          (pointerup)="pressEnd()"
+          (pointercancel)="pressEnd()"
           (keydown)="moveFocus($event, rowIndex, columnIndex)"
         >
           @if (cellImage(cell); as image) {

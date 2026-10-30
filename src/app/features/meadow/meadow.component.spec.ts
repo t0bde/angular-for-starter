@@ -104,4 +104,54 @@ describe('MeadowComponent', () => {
 
     expect(component.running()).toBe(false);
   });
+
+  it('shows the cell info for animals only and keeps a pinned card when the hover ends', () => {
+    const anchor = { left: 0, top: 0, right: 40, bottom: 40 };
+    component.world.set({
+      grid: [[animalCell('herbivore', 4), { species: 'plant' }]],
+      tick: 0,
+    });
+
+    component.previewCellInfo({ position: { row: 0, column: 0 }, anchor });
+    expect(component.inspectedAnimal()?.cell.energy).toBe(4);
+
+    component.endPreviewCellInfo();
+    expect(component.inspection()).toBeNull();
+
+    component.previewCellInfo({ position: { row: 0, column: 1 }, anchor });
+    expect(component.inspectedAnimal()).toBeNull();
+
+    component.pinCellInfo({ position: { row: 0, column: 0 }, anchor });
+    component.endPreviewCellInfo();
+    expect(component.inspection()?.pinned).toBe(true);
+  });
+
+  it('drops the card once its cell is no longer an animal', () => {
+    const anchor = { left: 0, top: 0, right: 40, bottom: 40 };
+    component.world.set({
+      grid: [[animalCell('herbivore', 1)]],
+      tick: 0,
+    });
+    component.pinCellInfo({ position: { row: 0, column: 0 }, anchor });
+
+    component.paint({ row: 0, column: 0 });
+
+    expect(component.inspection()).toBeNull();
+  });
+
+  it('does not show a pinned card for a different species that moves into the cell', () => {
+    const anchor = { left: 0, top: 0, right: 40, bottom: 40 };
+    component.world.set({
+      grid: [[animalCell('herbivore', 1)]],
+      tick: 0,
+    });
+    component.pinCellInfo({ position: { row: 0, column: 0 }, anchor });
+
+    component.world.set({
+      grid: [[animalCell('predator', 1)]],
+      tick: 1,
+    });
+
+    expect(component.inspectedAnimal()).toBeNull();
+  });
 });
