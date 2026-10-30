@@ -55,7 +55,10 @@ describe('I18nService', () => {
     expect(buttons[1].getAttribute('aria-pressed')).toBe('true');
     expect(buttons[0].getAttribute('aria-pressed')).toBe('false');
     expect(root.querySelector('.lab-brand')?.textContent?.trim()).toBe('Living Systems Lab');
-    expect(root.textContent).toContain('Wiesenmacher');
+    expect(root.querySelector('.lab-link')?.textContent?.trim()).toBe('Meadow Makers');
+    expect(root.querySelector('.eyebrow')?.textContent?.trim()).toBe('Living systems lab');
+    expect(root.querySelector('h1')?.textContent?.trim()).toBe('Meadow Makers');
+    expect(root.textContent).toContain('Tag 0');
   });
 
   it('translates simulation text, including labels set in code', async () => {
