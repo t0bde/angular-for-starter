@@ -5,7 +5,7 @@ export const de: Record<TranslationKey, string> = {
   'app.navLabel': 'Seiten des Labors für lebende Systeme',
   'app.language': 'Sprache',
   'app.footerLegal': 'Impressum & Datenschutz',
-  'nav.meadow': 'Wiesenmacher',
+  'nav.meadow': 'Meadow Makers',
   'nav.life': 'Conways Spiel des Lebens',
   'nav.howItWorks': 'So funktioniert es',
 
@@ -15,8 +15,8 @@ export const de: Record<TranslationKey, string> = {
   'speed.fast': 'schnell',
   'common.pause': 'Pause',
 
-  'meadow.eyebrow': 'Labor für lebende Systeme',
-  'meadow.heading': 'Wiesenmacher',
+  'meadow.eyebrow': 'Living systems lab',
+  'meadow.heading': 'Meadow Makers',
   'meadow.day': 'Tag {day}',
   'meadow.simulation': 'Ökosystem-Simulation',
   'meadow.behaviorLabel': 'Verhalten der Arten einstellen',
