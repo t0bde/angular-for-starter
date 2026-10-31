@@ -26,6 +26,10 @@ export const de: Record<TranslationKey, string> = {
   'meadow.herbivoreAggression': 'Aggression der Pflanzenfresser',
   'meadow.predatorReproduction': 'Vermehrung der Raubtiere',
   'meadow.predatorAggression': 'Aggression der Raubtiere',
+  'meadow.herbivoreMaxAge': 'Maximales Alter der Pflanzenfresser',
+  'meadow.herbivoreHunger': 'Pflanzenfresser hungrig unter',
+  'meadow.predatorMaxAge': 'Maximales Alter der Raubtiere',
+  'meadow.predatorHunger': 'Raubtiere hungrig unter',
   'meadow.msgNoPredators': 'Hier gibt es keine Raubtiere. Pflanzenfresser können schnell wachsen.',
   'meadow.msgNoHerbivores':
     'Raubtiere brauchen Pflanzenfresser. Behalte ihre Energie genau im Blick.',

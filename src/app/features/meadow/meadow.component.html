@@ -95,6 +95,50 @@
           [value]="behaviorSettings().predatorFoodEnergy"
           (input)="changeBehavior('predatorFoodEnergy', $any($event.target).value)"
       /></label>
+      <label class="behavior-row"
+        ><span class="behavior-label"
+          ><img class="behavior-icon" src="species/herbivore.svg" alt="" />{{ t('meadow.herbivoreMaxAge') }}<strong>{{ behaviorSettings().herbivoreMaxAge }}</strong></span
+        ><input
+          type="range"
+          min="5"
+          max="60"
+          step="1"
+          [value]="behaviorSettings().herbivoreMaxAge"
+          (input)="changeBehavior('herbivoreMaxAge', $any($event.target).value)"
+      /></label>
+      <label class="behavior-row"
+        ><span class="behavior-label"
+          ><img class="behavior-icon" src="species/herbivore.svg" alt="" />{{ t('meadow.herbivoreHunger') }}<strong>&lt; {{ behaviorSettings().herbivoreHungerEnergy }}</strong></span
+        ><input
+          type="range"
+          min="1"
+          max="15"
+          step="1"
+          [value]="behaviorSettings().herbivoreHungerEnergy"
+          (input)="changeBehavior('herbivoreHungerEnergy', $any($event.target).value)"
+      /></label>
+      <label class="behavior-row"
+        ><span class="behavior-label"
+          ><img class="behavior-icon" src="species/predator.svg" alt="" />{{ t('meadow.predatorMaxAge') }}<strong>{{ behaviorSettings().predatorMaxAge }}</strong></span
+        ><input
+          type="range"
+          min="5"
+          max="60"
+          step="1"
+          [value]="behaviorSettings().predatorMaxAge"
+          (input)="changeBehavior('predatorMaxAge', $any($event.target).value)"
+      /></label>
+      <label class="behavior-row"
+        ><span class="behavior-label"
+          ><img class="behavior-icon" src="species/predator.svg" alt="" />{{ t('meadow.predatorHunger') }}<strong>&lt; {{ behaviorSettings().predatorHungerEnergy }}</strong></span
+        ><input
+          type="range"
+          min="1"
+          max="15"
+          step="1"
+          [value]="behaviorSettings().predatorHungerEnergy"
+          (input)="changeBehavior('predatorHungerEnergy', $any($event.target).value)"
+      /></label>
     </div>
   </section>
   <app-meadow-lesson [message]="ecosystemMessage()" />

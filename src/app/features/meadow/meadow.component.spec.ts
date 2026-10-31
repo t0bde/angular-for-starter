@@ -25,8 +25,12 @@ describe('MeadowComponent', () => {
       plantGrowthChance: 0.4,
       herbivoreReproductionChance: 0.28,
       herbivoreFoodEnergy: 6,
+      herbivoreMaxAge: 30,
+      herbivoreHungerEnergy: 8,
       predatorReproductionChance: 0.06,
       predatorFoodEnergy: 2,
+      predatorMaxAge: 40,
+      predatorHungerEnergy: 9,
     };
 
     expect(component.behaviorSettings()).toEqual(expected);
