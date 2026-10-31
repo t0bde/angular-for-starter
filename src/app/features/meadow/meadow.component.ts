@@ -31,6 +31,10 @@ const defaultBehaviorSettings: BehaviorSettings = {
   herbivoreFoodEnergy: defaultSimulationSettings.herbivoreFoodEnergy,
   predatorReproductionChance: defaultSimulationSettings.predatorReproductionChance,
   predatorFoodEnergy: defaultSimulationSettings.predatorFoodEnergy,
+  herbivoreMaxAge: defaultSimulationSettings.herbivoreMaxAge,
+  predatorMaxAge: defaultSimulationSettings.predatorMaxAge,
+  herbivoreHungerEnergy: defaultSimulationSettings.herbivoreHungerEnergy,
+  predatorHungerEnergy: defaultSimulationSettings.predatorHungerEnergy,
 };
 
 @Component({

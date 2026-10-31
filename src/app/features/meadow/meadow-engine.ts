@@ -3,6 +3,8 @@ export type Species = 'empty' | 'plant' | 'herbivore' | 'predator';
 export interface EcosystemCell {
   species: Species;
   energy?: number;
+  /** Ticks the animal has lived; omitted for newborns. */
+  age?: number;
   /** True when an animal here is standing on a trampled plant instead of an empty tile; the plant regrows once vacated. */
   plantBeneath?: boolean;
 }
@@ -30,6 +32,11 @@ export interface SimulationSettings {
   herbivoreReproductionChance: number;
   predatorReproductionChance: number;
   reproductionEnergyCost: number;
+  herbivoreMaxAge: number;
+  predatorMaxAge: number;
+  /** Animals only look for food while their energy is below this value. */
+  herbivoreHungerEnergy: number;
+  predatorHungerEnergy: number;
 }
 
 export type RandomSource = () => number;
@@ -51,6 +58,7 @@ interface AnimalIntent {
   offspring?: Position;
   destinationPlantBeneath: boolean;
   originPlantBeneath: boolean;
+  age: number;
 }
 
 export const defaultSimulationSettings: SimulationSettings = {
@@ -65,6 +73,10 @@ export const defaultSimulationSettings: SimulationSettings = {
   herbivoreReproductionChance: 0.28,
   predatorReproductionChance: 0.06,
   reproductionEnergyCost: 3,
+  herbivoreMaxAge: 30,
+  predatorMaxAge: 40,
+  herbivoreHungerEnergy: 8,
+  predatorHungerEnergy: 10,
 };
 
 export function emptyCell(): EcosystemCell {
@@ -75,8 +87,14 @@ export function animalCell(
   species: 'herbivore' | 'predator',
   energy: number,
   plantBeneath?: boolean,
+  age?: number,
 ): EcosystemCell {
-  return plantBeneath ? { species, energy, plantBeneath: true } : { species, energy };
+  return {
+    species,
+    energy,
+    ...(age ? { age } : {}),
+    ...(plantBeneath ? { plantBeneath: true } : {}),
+  };
 }
 
 export function createBalancedState(
@@ -182,6 +200,7 @@ export function advanceSimulation(
         intent.species,
         intent.energy,
         intent.destinationPlantBeneath,
+        intent.age,
       );
       claimedDestinations.add(destinationKey);
       survivors.set(originKey, intent.destination);
@@ -200,6 +219,7 @@ export function advanceSimulation(
         intent.species,
         intent.stayEnergy,
         intent.originPlantBeneath,
+        intent.age,
       );
       claimedDestinations.add(originKey);
       survivors.set(originKey, intent.origin);
@@ -302,12 +322,22 @@ function createAnimalIntents(
       }
 
       const origin = { row: rowIndex, column: columnIndex };
+
+      // Animals that reach their max age die and leave no intent, so the cell is cleared below.
+      if (willDieOfAge(cell, settings)) {
+        return;
+      }
+      const age = (cell.age ?? 0) + 1;
+
       const neighbors = getNeighborPositions(source, origin);
       const prey = cell.species === 'herbivore' ? 'plant' : 'herbivore';
-      const foodChoices = neighbors.filter(
-        ({ row: neighborRow, column: neighborColumn }) =>
-          source[neighborRow][neighborColumn].species === prey,
-      );
+      const isHungry = (cell.energy ?? 0) < hungerEnergyFor(cell.species, settings);
+      const foodChoices = isHungry
+        ? neighbors.filter(({ row: neighborRow, column: neighborColumn }) => {
+            const neighbor = source[neighborRow][neighborColumn];
+            return neighbor.species === prey && !willDieOfAge(neighbor, settings);
+          })
+        : [];
       const emptyChoices = neighbors.filter(
         ({ row: neighborRow, column: neighborColumn }) =>
           source[neighborRow][neighborColumn].species === 'empty',
@@ -367,11 +397,25 @@ function createAnimalIntents(
           preyPlantBeneath ||
           (!food && afterGrowth[destination.row][destination.column].species === 'plant'),
         originPlantBeneath: source[origin.row][origin.column].plantBeneath === true,
+        age,
       });
     });
   });
 
   return intents;
+}
+
+function maxAgeFor(species: 'herbivore' | 'predator', settings: SimulationSettings): number {
+  return species === 'herbivore' ? settings.herbivoreMaxAge : settings.predatorMaxAge;
+}
+
+function hungerEnergyFor(species: 'herbivore' | 'predator', settings: SimulationSettings): number {
+  return species === 'herbivore' ? settings.herbivoreHungerEnergy : settings.predatorHungerEnergy;
+}
+
+/** True when this tick's aging makes the animal reach its max age, so it dies this tick. */
+function willDieOfAge(cell: EcosystemCell, settings: SimulationSettings): boolean {
+  return isAnimal(cell) && (cell.age ?? 0) + 1 >= maxAgeFor(cell.species, settings);
 }
 
 function choose<T>(items: T[], random: RandomSource): T | undefined {

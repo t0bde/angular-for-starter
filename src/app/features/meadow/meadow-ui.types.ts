@@ -31,6 +31,10 @@ export type BehaviorSettings = Pick<
   | 'herbivoreFoodEnergy'
   | 'predatorReproductionChance'
   | 'predatorFoodEnergy'
+  | 'herbivoreMaxAge'
+  | 'predatorMaxAge'
+  | 'herbivoreHungerEnergy'
+  | 'predatorHungerEnergy'
 >;
 export const speciesImages: Partial<Record<Species, string>> = {
   plant: 'species/plant.svg',
