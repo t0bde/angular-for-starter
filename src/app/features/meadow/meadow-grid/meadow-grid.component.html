@@ -15,6 +15,7 @@
           (pointerdown)="pressStart($event, rowIndex, columnIndex)"
           (pointerup)="pressEnd()"
           (pointercancel)="pressEnd()"
+          (contextmenu)="$event.preventDefault()"
           (keydown)="moveFocus($event, rowIndex, columnIndex)"
         >
           @if (cellImage(cell); as image) {
