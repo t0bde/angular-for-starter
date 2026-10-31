@@ -68,6 +68,22 @@ describe('ecosystem engine', () => {
     expect(countPopulations(next.grid)).toEqual({ plant: 0, herbivore: 0, predator: 1 });
   });
 
+  it('allows a predator to reproduce with the default energy settings', () => {
+    const state = stateFrom([
+      [emptyCell(), emptyCell(), emptyCell()],
+      [emptyCell(), animalCell('predator', 9), animalCell('herbivore', 5)],
+      [emptyCell(), emptyCell(), emptyCell()],
+    ]);
+
+    const next = advanceSimulation(state, () => 0);
+
+    expect(next.grid).toEqual([
+      [animalCell('predator', 6), emptyCell(), emptyCell()],
+      [emptyCell(), emptyCell(), animalCell('predator', 8, undefined, 1)],
+      [emptyCell(), emptyCell(), emptyCell()],
+    ]);
+  });
+
   it('removes a herbivore before it can move away from a predator', () => {
     const state = stateFrom([
       [animalCell('predator', 6), animalCell('herbivore', 5), { species: 'plant' }],

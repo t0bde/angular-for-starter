@@ -76,7 +76,7 @@ export const defaultSimulationSettings: SimulationSettings = {
   herbivoreMaxAge: 30,
   predatorMaxAge: 40,
   herbivoreHungerEnergy: 8,
-  predatorHungerEnergy: 9,
+  predatorHungerEnergy: 10,
 };
 
 export function emptyCell(): EcosystemCell {
