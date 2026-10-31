@@ -27,6 +27,7 @@
   background: #b8dc80;
   cursor: pointer;
   -webkit-touch-callout: none;
+  -webkit-user-select: none;
   user-select: none;
 }
 .habitat-cell:focus-visible {
@@ -48,6 +49,7 @@
   width: 72%;
   height: 72%;
   object-fit: contain;
+  pointer-events: none;
 }
 @media (max-width: 760px) {
   .meadow-frame {
