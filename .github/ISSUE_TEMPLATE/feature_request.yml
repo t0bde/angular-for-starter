@@ -5,10 +5,19 @@ body:
   - type: textarea
     id: problem
     attributes:
-      label: Problem or motivation
+      label: User problem
+      description: Who is affected, and what are they unable to do today?
     validations:
       required: true
   - type: textarea
-    id: solution
+    id: outcome
     attributes:
-      label: Proposed solution
+      label: Desired outcome and acceptance criteria
+      description: Describe the observable result that would solve the problem. List testable acceptance criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints or non-goals
+      description: Note important limitations or work that should stay out of scope.
