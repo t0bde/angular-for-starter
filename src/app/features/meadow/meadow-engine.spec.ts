@@ -1,6 +1,8 @@
 import {
   advanceSimulation,
+  animalAge,
   animalCell,
+  animalIsHungry,
   countPopulations,
   emptyCell,
   getNeighborPositions,
@@ -258,5 +260,18 @@ describe('ecosystem engine', () => {
       { row: 1, column: 0 },
       { row: 1, column: 1 },
     ]);
+  });
+
+  it('reads a missing age as zero and hunger only below the species line', () => {
+    const line = { herbivoreHungerEnergy: 8, predatorHungerEnergy: 10 };
+
+    expect(animalAge(animalCell('herbivore', 4))).toBe(0);
+    expect(animalAge(animalCell('herbivore', 4, false, 3))).toBe(3);
+    expect(animalIsHungry(animalCell('herbivore', 7), line)).toBe(true);
+    expect(animalIsHungry(animalCell('herbivore', 8), line)).toBe(false);
+    expect(animalIsHungry({ species: 'herbivore' }, line)).toBe(true);
+    expect(animalIsHungry(animalCell('predator', 9), line)).toBe(true);
+    expect(animalIsHungry(animalCell('predator', 10), line)).toBe(false);
+    expect(animalIsHungry({ species: 'plant' }, line)).toBe(false);
   });
 });
