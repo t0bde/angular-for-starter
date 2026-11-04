@@ -34,4 +34,4 @@ Balanced, Green meadow, and Predator boom open from fixed seeds, so each story s
 
 Behavior sliders change growth, reproduction chance, food energy, max age, and hunger for the next day. They do not rewrite the current grid.
 
-Inspection shows one animal's energy, position, and whether a plant is hidden under it. Hover previews. A pinned card stays until dismissed, or until that cell no longer holds that animal.
+Inspection shows one animal's energy, age, whether it is hungry or full, position, and whether a plant is hidden under it. Age is days lived; a newborn shows 0. Hungry means energy is below that species' hunger line — the same read a day uses to hunt. A missing energy counts as 0, so the animal reads as hungry. The card follows the hunger sliders immediately, because those sliders are the line the next day will use, not a line stored from the previous day. Hover previews. A pinned card stays until dismissed, or until that cell no longer holds that animal.

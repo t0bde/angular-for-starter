@@ -143,6 +143,24 @@ describe('MeadowComponent', () => {
     expect(component.inspection()).toBeNull();
   });
 
+  it('reads a newborn as age 0 and flips full to hungry when the hunger slider rises', () => {
+    const anchor = { left: 0, top: 0, right: 40, bottom: 40 };
+    component.world.set({
+      grid: [[animalCell('herbivore', 8)]],
+      tick: 0,
+    });
+
+    component.pinCellInfo({ position: { row: 0, column: 0 }, anchor });
+
+    expect(component.inspectedAnimal()?.age).toBe(0);
+    expect(component.inspectedAnimal()?.hungry).toBe(false);
+
+    component.changeBehavior('herbivoreHungerEnergy', '9');
+
+    expect(component.world().tick).toBe(0);
+    expect(component.inspectedAnimal()?.hungry).toBe(true);
+  });
+
   it('does not show a pinned card for a different species that moves into the cell', () => {
     const anchor = { left: 0, top: 0, right: 40, bottom: 40 };
     component.world.set({

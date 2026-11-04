@@ -327,11 +327,11 @@ function createAnimalIntents(
       if (willDieOfAge(cell, settings)) {
         return;
       }
-      const age = (cell.age ?? 0) + 1;
+      const age = animalAge(cell) + 1;
 
       const neighbors = getNeighborPositions(source, origin);
       const prey = cell.species === 'herbivore' ? 'plant' : 'herbivore';
-      const isHungry = (cell.energy ?? 0) < hungerEnergyFor(cell.species, settings);
+      const isHungry = animalIsHungry(cell, settings);
       const foodChoices = isHungry
         ? neighbors.filter(({ row: neighborRow, column: neighborColumn }) => {
             const neighbor = source[neighborRow][neighborColumn];
@@ -409,13 +409,30 @@ function maxAgeFor(species: 'herbivore' | 'predator', settings: SimulationSettin
   return species === 'herbivore' ? settings.herbivoreMaxAge : settings.predatorMaxAge;
 }
 
-function hungerEnergyFor(species: 'herbivore' | 'predator', settings: SimulationSettings): number {
+export function animalAge(cell: EcosystemCell): number {
+  return cell.age ?? 0;
+}
+
+export function animalIsHungry(
+  cell: EcosystemCell,
+  settings: Pick<SimulationSettings, 'herbivoreHungerEnergy' | 'predatorHungerEnergy'>,
+): boolean {
+  if (!isAnimal(cell)) {
+    return false;
+  }
+  return (cell.energy ?? 0) < hungerEnergyFor(cell.species, settings);
+}
+
+function hungerEnergyFor(
+  species: 'herbivore' | 'predator',
+  settings: Pick<SimulationSettings, 'herbivoreHungerEnergy' | 'predatorHungerEnergy'>,
+): number {
   return species === 'herbivore' ? settings.herbivoreHungerEnergy : settings.predatorHungerEnergy;
 }
 
 /** True when this tick's aging makes the animal reach its max age, so it dies this tick. */
 function willDieOfAge(cell: EcosystemCell, settings: SimulationSettings): boolean {
-  return isAnimal(cell) && (cell.age ?? 0) + 1 >= maxAgeFor(cell.species, settings);
+  return isAnimal(cell) && animalAge(cell) + 1 >= maxAgeFor(cell.species, settings);
 }
 
 function choose<T>(items: T[], random: RandomSource): T | undefined {

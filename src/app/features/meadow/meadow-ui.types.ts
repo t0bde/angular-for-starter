@@ -17,6 +17,8 @@ export interface CellInspectState extends CellInspectRequest {
 
 export interface CellInspection extends CellInspectState {
   cell: EcosystemCell;
+  age: number;
+  hungry: boolean;
 }
 
 export type PresetName = 'balanced' | 'meadow' | 'predator-boom';
