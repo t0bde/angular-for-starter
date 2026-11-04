@@ -2,7 +2,9 @@ import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { I18nService } from '../../shared/i18n/i18n.service';
 import {
   advanceSimulation,
+  animalAge,
   animalCell,
+  animalIsHungry,
   countPopulations,
   createBalancedState,
   defaultSimulationSettings,
@@ -65,7 +67,12 @@ export class MeadowComponent implements OnDestroy {
     const cell = this.world().grid[state.position.row]?.[state.position.column];
     if (!cell || cell.species !== state.species) return null;
     if (cell.species !== 'herbivore' && cell.species !== 'predator') return null;
-    return { ...state, cell };
+    return {
+      ...state,
+      cell,
+      age: animalAge(cell),
+      hungry: animalIsHungry(cell, this.behaviorSettings()),
+    };
   });
   private intervalId?: number;
 
