@@ -1,0 +1,33 @@
+[
+  {
+    "label": "ng serve",
+    "command": "npm start",
+    "allow_concurrent_runs": false,
+    "use_new_terminal": false,
+    "reveal": "always"
+  },
+  {
+    "label": "ng test",
+    "command": "npm test",
+    "use_new_terminal": false,
+    "reveal": "always"
+  },
+  {
+    "label": "ng test (single run)",
+    "command": "npm test -- --no-watch",
+    "use_new_terminal": false,
+    "reveal": "always"
+  },
+  {
+    "label": "ng lint",
+    "command": "npm run lint",
+    "use_new_terminal": false,
+    "reveal": "always"
+  },
+  {
+    "label": "ng build",
+    "command": "npm run build",
+    "use_new_terminal": false,
+    "reveal": "always"
+  }
+]
