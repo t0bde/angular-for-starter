@@ -15,6 +15,25 @@ describe('Impressum', () => {
     expect(text).toContain('info@letsdothings.org');
   });
 
+  it.each([
+    ['en', 'Language setting'],
+    ['de', 'Spracheinstellung'],
+  ] as const)(
+    'discloses the stored language choice and names no analytics (%s)',
+    async (lang, heading) => {
+      localStorage.setItem('lang', lang);
+      await TestBed.configureTestingModule({ imports: [ImpressumComponent] }).compileComponents();
+      const fixture = TestBed.createComponent(ImpressumComponent);
+      await fixture.whenStable();
+
+      const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+      expect(text).toContain(heading);
+      expect(text).toContain('Local Storage');
+      expect(text).not.toMatch(/analytics/i);
+      localStorage.clear();
+    },
+  );
+
   it('is linked from the footer of every page', async () => {
     await TestBed.configureTestingModule({
       imports: [App],

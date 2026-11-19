@@ -19,7 +19,7 @@
           [class.selected]="speed() === option"
           (click)="speedSelected.emit(option)"
         >
-          {{ t('speed.' + option) }}
+          {{ t(`speed.${option}`) }}
         </button>
       }
     </div>
@@ -38,12 +38,12 @@
           [class.selected]="activePreset() === preset.id"
           (click)="presetSelected.emit(preset.id)"
         >
-          <span class="preset-name">{{ t('seed.' + preset.id + '.label') }}</span>
+          <span class="preset-name">{{ t(`seed.${preset.id}.label`) }}</span>
           <span class="preset-meta">{{ t('lifeControls.cells', { count: preset.cells }) }}</span>
         </button>
       }
     </div>
-    <p class="seed-blurb">{{ t('seed.' + activeSeedInfo().id + '.description') }}</p>
+    <p class="seed-blurb">{{ t(`seed.${activeSeedInfo().id}.description`) }}</p>
   </div>
 
   <div class="control-group">
@@ -56,7 +56,7 @@
           (click)="brushSelected.emit(brush.id)"
         >
           <span class="tool-mark" [class]="brush.id">{{ brush.mark }}</span>
-          <span>{{ t('brush.' + brush.id) }}</span>
+          <span>{{ t(`brush.${brush.id}`) }}</span>
         </button>
       }
     </div>

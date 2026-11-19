@@ -32,6 +32,6 @@ Playback stops when no animals remain, and will not start on a meadow with none.
 
 Balanced, Green meadow, and Predator boom open from fixed seeds, so each story starts the same way. Running days are not seeded. The same opening is meant to diverge.
 
-Behavior sliders change growth, reproduction chance, food energy, max age, and hunger for the next day. They do not rewrite the current grid.
+Behavior sliders change growth, reproduction chance, food energy, max age, and hunger for the next day. They do not rewrite the current grid. Opening a story keeps the slider values; Reset restores the sliders to their defaults along with the balanced story.
 
 Inspection shows one animal's energy, position, and whether a plant is hidden under it. Hover previews. A pinned card stays until dismissed, or until that cell no longer holds that animal.

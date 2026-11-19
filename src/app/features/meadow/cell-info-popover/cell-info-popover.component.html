@@ -3,7 +3,7 @@
     @if (image(); as src) {
       <img [src]="src" alt="" aria-hidden="true" />
     }
-    <h2>{{ t('species.' + info().cell.species) }}</h2>
+    <h2>{{ t(`species.${info().cell.species}`) }}</h2>
   </header>
   <p class="cell-info-title">{{ t('cellInfo.thisAnimal') }}</p>
   <dl>

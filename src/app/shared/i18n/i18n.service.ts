@@ -40,8 +40,8 @@ export class I18nService {
   }
 
   // Arrow property so components can use `readonly t = inject(I18nService).t`.
-  readonly t = (key: string, params?: Record<string, string | number>): string => {
-    const text = dictionaries[this.lang()][key as TranslationKey] ?? key;
+  readonly t = (key: TranslationKey, params?: Record<string, string | number>): string => {
+    const text = dictionaries[this.lang()][key] ?? key;
     return params ? text.replace(/\{(\w+)\}/g, (_, name) => String(params[name] ?? '')) : text;
   };
 }

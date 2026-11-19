@@ -32,7 +32,7 @@
           [class.selected]="speed() === option"
           (click)="speedSelected.emit(option)"
         >
-          {{ t('speed.' + option) }}
+          {{ t(`speed.${option}`) }}
         </button>
       }
     </div>
@@ -60,7 +60,7 @@
             } @else {
               {{ tool.mark }}
             }</span
-          >{{ t('species.' + tool.id) }}
+          >{{ t(`species.${tool.id}`) }}
         </button>
       }
     </div>

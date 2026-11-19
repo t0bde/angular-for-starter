@@ -1,58 +1,37 @@
-# AngularForStarter
+# Living Systems Lab
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.0.
+A small public teaching site, in English and German, where you edit a living grid and watch the local rule answer. No account, no install, no server.
 
-## Development server
+- **Meadow Makers** (`/meadow`): a food-chain meadow of plants, plant eaters and predators. Paint cells, run or step days, open a seeded story, and tune species behavior.
+- **Conway's Way of Life** (`/game-of-life`): Conway's Game of Life (B3/S23) with brushes, Methuselah seeds and an optional wrap-around edge.
+- **How it works** (`/how-it-works`): the Life rules explained.
+- **Impressum & Datenschutz** (`/impressum`): operator and privacy notice.
 
-To start a local development server, run:
+Built with Angular 22 (standalone components, signals, lazy routes), Vitest and ESLint.
 
-```bash
-ng serve
-```
+## Design documents
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+| Document | What it covers |
+| --- | --- |
+| [`goal-and-requirements.md`](goal-and-requirements.md) | Goal, audience, capabilities and non-goals |
+| [`architecture.md`](architecture.md) | Decisions, invariants and limitations |
+| `src/app/**/SPEC.md` | Per-module rules (shell, i18n, meadow, game of life, how it works) |
 
-## Code scaffolding
+Key rules to keep in mind: the two labs never import each other, each tick's rules live in that lab's engine (`*-engine.ts`), and every visitor string goes through `i18n` (English is the key set; the legal page is the exception).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Development
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+Requires Node.js 22 and npm.
 
 ```bash
-ng build
+npm ci          # install dependencies
+npm start       # dev server at http://localhost:4200/
+npm test        # unit tests (Vitest); add -- --watch=false for a single run
+npm run lint    # ESLint, zero warnings allowed
+npm run build   # production build into dist/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+There is no end-to-end test setup.
 
 ## Delivery workflow
 
@@ -64,6 +43,6 @@ Keep work outcome-led and specifications lightweight:
 - Pull requests and pushes to `main` run lint, unit tests, and a production build through the **Verify** workflow. Merge after those checks pass and review is complete.
 - Ship when the change is ready; this repository does not currently configure automated deployment.
 
-## Additional Resources
+## Hosting
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The site is a static single-page app. `vercel.json` rewrites unknown paths to `index.html` so deep links such as `/meadow` work on a reload. Any static host needs the same fallback.
