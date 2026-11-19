@@ -14,10 +14,18 @@ describe('CellInfoPopoverComponent', () => {
     pinned: false,
     species: 'herbivore',
     cell: animalCell('herbivore', 7),
+    age: 0,
+    hungry: true,
     ...overrides,
   });
 
   const card = () => (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('.cell-info')!;
+
+  const row = (label: string) =>
+    Array.from(card().querySelectorAll('dl > div'))
+      .find((entry) => entry.querySelector('dt')?.textContent?.trim() === label)
+      ?.querySelector('dd')
+      ?.textContent?.trim();
 
   async function render(info: CellInspection): Promise<void> {
     fixture = TestBed.createComponent(CellInfoPopoverComponent);
@@ -34,14 +42,22 @@ describe('CellInfoPopoverComponent', () => {
 
   afterEach(() => localStorage.clear());
 
-  it('shows the animal, its energy and its 1-based position', async () => {
-    await render(inspection());
+  it('shows the animal, its energy, age, hunger and 1-based position', async () => {
+    await render(inspection({ age: 12, hungry: false }));
 
     const text = card().textContent ?? '';
     expect(text).toContain('Plant eater');
     expect(text).toContain('7');
+    expect(row('Age')).toBe('12');
+    expect(row('Hunger')).toBe('full');
     expect(text).toContain('Row 3, column 5');
     expect(text).not.toContain('Plant underneath');
+  });
+
+  it('says hungry when the animal is below its hunger line', async () => {
+    await render(inspection({ hungry: true }));
+
+    expect(row('Hunger')).toBe('hungry');
   });
 
   it('reports a hidden plant under the animal', async () => {
