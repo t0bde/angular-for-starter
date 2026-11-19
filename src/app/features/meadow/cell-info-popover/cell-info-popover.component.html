@@ -12,6 +12,14 @@
       <dd>{{ info().cell.energy ?? '–' }}</dd>
     </div>
     <div>
+      <dt>{{ t('cellInfo.age') }}</dt>
+      <dd>{{ info().age }}</dd>
+    </div>
+    <div>
+      <dt>{{ t('cellInfo.hunger') }}</dt>
+      <dd>{{ info().hungry ? t('cellInfo.hungry') : t('cellInfo.full') }}</dd>
+    </div>
+    <div>
       <dt>{{ t('cellInfo.position') }}</dt>
       <dd>{{ t('cellInfo.positionValue', { row: info().position.row + 1, column: info().position.column + 1 }) }}</dd>
     </div>

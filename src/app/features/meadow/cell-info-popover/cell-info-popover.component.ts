@@ -5,7 +5,7 @@ import { speciesImages } from '../meadow-ui.types';
 
 // Width must match cell-info-popover.component.css; height is measured after render.
 const cardWidth = 200;
-const estimatedCardHeight = 150;
+const estimatedCardHeight = 190;
 const gap = 10;
 const edge = 8;
 

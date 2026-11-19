@@ -19,7 +19,7 @@ Visitors to the public site. They can read the lab in English or German. They do
 
 ## Capabilities
 
-- Meadow Makers: paint plants, plant eaters, predators, or erase; run, step, or reset; open a seeded story (balanced, green meadow, or predator boom); change speed and species behavior; read population totals and one animal's energy; see the food-chain clue. Playback stops when no animals remain.
+- Meadow Makers: paint plants, plant eaters, predators, or erase; run, step, or reset; open a seeded story (balanced, green meadow, or predator boom); change speed and species behavior; read population totals and one animal's energy, age, and whether it is hungry or full; see the food-chain clue. Playback stops when no animals remain.
 - Conway's Way of Life: germinate, step, replant, or clear; change speed; toggle wrap-around; plant with brushes; start from a Methuselah seed; read living, sprout, perennial, and withered counts. Playback stops when nothing is alive. The rule is B3/S23, and there is no score.
 - A page that explains those Conway rules and what the Life page shows.
 - A language switch that survives reload.
